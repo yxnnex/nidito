@@ -258,4 +258,1010 @@
             display: inline-block;
             background-color: var(--sage-soft);
             border: 1px solid var(--brown-line);
-            border-radius: 9
+            border-radius: 999px;
+            padding: 3px 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            margin-bottom: 6px;
+        }
+
+        .timer-status-pill.alert-soon {
+            background-color: #FDE68A;
+        }
+
+        .timer-status-pill.alert-now {
+            background-color: var(--pink-btn);
+        }
+
+        .timer-main {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            line-height: 1.2;
+        }
+
+        .timer-sub {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--brown-mid);
+            margin-top: 3px;
+        }
+
+        /* Botón principal Toma Papilla */
+        .btn-toma-papilla {
+            width: 100%;
+            background-color: var(--pink-btn);
+            border: 2px solid var(--brown-line);
+            border-radius: 18px;
+            padding: 16px;
+            color: var(--brown-dark);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--brown-line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.08s ease, box-shadow 0.08s ease;
+        }
+
+        .btn-toma-papilla:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 var(--brown-line);
+            background-color: var(--pink-btn-hover);
+        }
+
+        /* Control de Jeringas de 5ml */
+        .syringe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .syringe-ml-badge {
+            background-color: var(--pink-soft);
+            border: 1.5px solid var(--brown-line);
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+        }
+
+        .syringe-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 16px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-step {
+            width: 42px;
+            height: 42px;
+            background-color: var(--pink-btn);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-step:active {
+            background-color: var(--pink-btn-hover);
+            transform: scale(0.95);
+        }
+
+        .syringe-display {
+            text-align: center;
+        }
+
+        .syringe-display .val {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            display: block;
+        }
+
+        .syringe-display .desc {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--brown-mid);
+        }
+
+        .quick-chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+        }
+
+        .chip {
+            flex: 1;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 6px 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .chip.active {
+            background-color: var(--pink-btn);
+        }
+
+        .obs-input {
+            width: 100%;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+            outline: none;
+        }
+
+        .obs-input::placeholder {
+            color: #9C826E;
+        }
+
+        /* Historial de tomas */
+        .history-stats {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stat-mini {
+            flex: 1;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        .stat-mini .num {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            display: block;
+        }
+
+        .stat-mini .lbl {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--brown-mid);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item {
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 16px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .item-left {
+            flex: 1;
+        }
+
+        .item-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .item-time {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+        }
+
+        .item-date {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--brown-mid);
+        }
+
+        .interval-badge {
+            background-color: var(--sage-card);
+            border: 1px solid var(--brown-line);
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+        }
+
+        .item-bottom {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--brown-mid);
+        }
+
+        .item-note {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+            background-color: var(--bg-cream);
+            border-left: 3px solid var(--brown-line);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .btn-del {
+            width: 34px;
+            height: 34px;
+            background-color: var(--pink-soft);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 10px;
+            color: var(--brown-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 22px 12px;
+            color: var(--brown-mid);
+            font-size: 0.88rem;
+            font-weight: 600;
+            background-color: var(--white-cream);
+            border: 1.5px dashed var(--brown-line);
+            border-radius: 16px;
+        }
+
+        /* Barra de Respaldo */
+        .backup-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1.5px dashed var(--brown-line-soft);
+        }
+
+        .btn-backup {
+            flex: 1;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 8px 10px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-backup:active {
+            background-color: var(--pink-soft);
+        }
+
+        /* Modal para carga manual */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(74, 53, 37, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 200;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background-color: var(--sage-card);
+            border: 2px solid var(--brown-line);
+            border-radius: 24px;
+            padding: 20px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 6px 0 var(--brown-line);
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            margin-bottom: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 9px 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--brown-dark);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 14px;
+            padding: 11px;
+            font-weight: 800;
+            color: var(--brown-dark);
+            cursor: pointer;
+        }
+
+        .btn-save-manual {
+            flex: 2;
+            background-color: var(--pink-btn);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 14px;
+            padding: 11px;
+            font-weight: 900;
+            color: var(--brown-dark);
+            box-shadow: 0 3px 0 var(--brown-line);
+            cursor: pointer;
+        }
+
+        /* Toast de confirmación */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background-color: var(--brown-dark);
+            color: var(--bg-cream);
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(74, 53, 37, 0.3);
+            transition: transform 0.25s ease;
+            z-index: 300;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Barra superior -->
+    <header class="top-bar">
+        <div class="brand-left">
+            <div class="nest-icon-box">🪺</div>
+            <div class="brand-text">
+                <h1>Nido PichónCare <span class="cloud-dot" id="syncDot" title="Conectando a Firebase..."></span></h1>
+                <p id="currentDateDisplay">Cargando fecha...</p>
+            </div>
+        </div>
+        <button class="btn-share" onclick="copySummary()" title="Copiar resumen">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+        </button>
+    </header>
+
+    <main class="main-content">
+        <!-- Tarjeta del Nido Grupal -->
+        <section class="card">
+            <div class="card-header-row">
+                <span class="card-title">🐣 Nido Grupal</span>
+                <span class="total-badge">6 pichones juntos</span>
+            </div>
+
+            <div class="chicks-pills">
+                <div class="chick-pill">
+                    <span class="emoji">🐥</span>
+                    <span class="count">2 Chiquitos</span>
+                    <span class="label">Más peques</span>
+                </div>
+                <div class="chick-pill">
+                    <span class="emoji">🐤</span>
+                    <span class="count">1 Mediano</span>
+                    <span class="label">Intermedio</span>
+                </div>
+                <div class="chick-pill">
+                    <span class="emoji">🐦</span>
+                    <span class="count">3 Grandecitos</span>
+                    <span class="label">Más grandes</span>
+                </div>
+            </div>
+
+            <div class="timer-box">
+                <span class="timer-status-pill" id="statusPill">Esperando primera toma</span>
+                <div class="timer-main" id="elapsedDisplay">Sin tomas hoy</div>
+                <div class="timer-sub" id="lastFeedExact">Presioná el botón cuando les des papilla</div>
+            </div>
+
+            <button class="btn-toma-papilla" onclick="registerFeed()">
+                <span>🍼</span>
+                <span>TOMA PAPILLA</span>
+            </button>
+        </section>
+
+        <!-- Control de Jeringas de 5 ml -->
+        <section class="card">
+            <div class="syringe-header">
+                <span class="card-title">💉 Medida de Jeringa (5 ml)</span>
+                <span class="syringe-ml-badge" id="mlBadge">7.5 ml totales</span>
+            </div>
+
+            <div class="syringe-stepper">
+                <button class="btn-step" onclick="changeSyringe(-0.25)">−</button>
+                <div class="syringe-display">
+                    <span class="val" id="syringeText">1 ½ jeringas</span>
+                    <span class="desc" id="syringeDesc">1 entera de 5ml + media</span>
+                </div>
+                <button class="btn-step" onclick="changeSyringe(0.25)">+</button>
+            </div>
+
+            <div class="quick-chips" id="quickChips">
+                <div class="chip" onclick="selectSyringe(1)">1</div>
+                <div class="chip active" onclick="selectSyringe(1.5)">1 ½</div>
+                <div class="chip" onclick="selectSyringe(2)">2</div>
+                <div class="chip" onclick="selectSyringe(2.5)">2 ½</div>
+                <div class="chip" onclick="selectSyringe(3)">3</div>
+            </div>
+
+            <input type="text" id="obsInput" class="obs-input" placeholder="Observación (ej: buches llenitos, pidieron más)...">
+        </section>
+
+        <!-- Historial y Frecuencia -->
+        <section class="card">
+            <div class="card-header-row">
+                <span class="card-title">📋 Registro de Tomas</span>
+                <div class="header-actions">
+                    <button class="btn-mini-pink" onclick="openManualModal()">+ Manual</button>
+                    <span class="total-badge" id="todayCountBadge">0 hoy</span>
+                </div>
+            </div>
+
+            <div class="history-stats">
+                <div class="stat-mini">
+                    <span class="num" id="avgIntervalDisplay">—</span>
+                    <span class="lbl">Promedio entre tomas</span>
+                </div>
+                <div class="stat-mini">
+                    <span class="num" id="todayMlDisplay">0 ml</span>
+                    <span class="lbl">Papilla dada hoy</span>
+                </div>
+            </div>
+
+            <div class="history-list" id="historyList">
+                <div class="empty-state">Todavía no hay tomas registradas.<br>Tocá <strong>TOMA PAPILLA</strong> o <strong>+ Manual</strong> para cargar una hora anterior.</div>
+            </div>
+
+            <!-- Botones de Respaldo -->
+            <div class="backup-row">
+                <button class="btn-backup" onclick="exportBackup()">💾 Guardar Respaldo</button>
+                <button class="btn-backup" onclick="document.getElementById('importFile').click()">📂 Restaurar Respaldo</button>
+                <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)">
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal para agregar toma manual -->
+<div class="modal-backdrop" id="manualModal">
+    <div class="modal-box">
+        <div class="modal-title">
+            <span>🕒 Agregar Toma Pasada</span>
+        </div>
+        <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" id="manualDate" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Hora de la toma</label>
+            <input type="time" id="manualTime" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Cantidad de jeringas (5 ml c/u)</label>
+            <input type="number" id="manualSyringe" class="form-control" step="0.25" min="0.25" value="1.5">
+        </div>
+        <div class="form-group">
+            <label>Observación (opcional)</label>
+            <input type="text" id="manualNote" class="form-control" placeholder="Ej: Toma de la mañana">
+        </div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="closeManualModal()">Cancelar</button>
+            <button class="btn-save-manual" onclick="saveManualFeed()">Guardar Toma</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBR9N4TeiQ9AyWk3DVA8DSYjY-cXmaU_4k",
+        authDomain: "pichones-784dc.firebaseapp.com",
+        databaseURL: "https://pichones-784dc-default-rtdb.firebaseio.com",
+        projectId: "pichones-784dc",
+        storageBucket: "pichones-784dc.firebasestorage.app",
+        messagingSenderId: "397073369398",
+        appId: "1:397073369398:web:9f8103cf47faa21b90cb97",
+        measurementId: "G-NP8NTJZTGD"
+    };
+
+    const STORAGE_KEY = 'nido_pichoncare_v2';
+    const SYRINGE_KEY = 'nido_pichoncare_syringe';
+
+    firebase.initializeApp(firebaseConfig);
+    const rtdb = firebase.database();
+
+    // Indicador de conexión en tiempo real con Realtime Database
+    rtdb.ref('.info/connected').on('value', snap => {
+        const dot = document.getElementById('syncDot');
+        if (snap.val() === true) {
+            dot.classList.add('synced');
+            dot.title = 'Sincronizado con Firebase';
+        } else {
+            dot.classList.remove('synced');
+            dot.title = 'Sin conexión (guardando en local)';
+        }
+    });
+
+    // Migración automática por si quedaron datos locales previos
+    function loadLocalFeeds() {
+        let current = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const legacyKeys = ['pichoncare_history', 'nido_pichoncare_v1', 'pichones_tomas'];
+        legacyKeys.forEach(oldKey => {
+            const raw = localStorage.getItem(oldKey);
+            if (raw) {
+                try {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) {
+                        parsed.forEach(item => {
+                            if (item.timestamp && !current.some(c => c.timestamp === item.timestamp)) {
+                                const syr = parseFloat(item.syringes || 1.5);
+                                current.push({
+                                    id: item.id || new Date(item.timestamp).getTime(),
+                                    timestamp: item.timestamp,
+                                    syringes: syr,
+                                    ml: item.ml || item.totalMl || (syr * 5),
+                                    note: item.note || item.notes || ''
+                                });
+                            }
+                        });
+                    }
+                    localStorage.removeItem(oldKey);
+                } catch (e) {}
+            }
+        });
+        current.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
+        return current;
+    }
+
+    let feeds = loadLocalFeeds();
+    let currentSyringes = parseFloat(localStorage.getItem(SYRINGE_KEY) || '1.5');
+
+    // Escuchar datos desde Firebase Realtime Database
+    const tomasRef = rtdb.ref('nido_tomas');
+    tomasRef.on('value', snapshot => {
+        const val = snapshot.val();
+        if (val) {
+            const cloudList = Object.values(val);
+            cloudList.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            feeds = cloudList;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(feeds));
+            renderAll();
+        } else if (feeds.length > 0) {
+            // Si la nube estaba vacía pero había registros locales, los sube automáticamente
+            feeds.forEach(item => {
+                tomasRef.child(String(item.id)).set(item);
+            });
+        }
+    }, err => {
+        console.warn('Revisar reglas de Realtime Database:', err);
+        showToast('⚠️ Revisá reglas de lectura/escritura en Firebase');
+    });
+
+    function persistFeeds() {
+        feeds.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(feeds));
+    }
+
+    function updateHeaderDate() {
+        const now = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'long' };
+        let formatted = now.toLocaleDateString('es-AR', options);
+        formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        document.getElementById('currentDateDisplay').textContent = formatted;
+    }
+
+    function formatSyringeFraction(val) {
+        const whole = Math.floor(val);
+        const rem = Math.round((val - whole) * 100);
+        let frac = '';
+        if (rem === 25) frac = '¼';
+        else if (rem === 50) frac = '½';
+        else if (rem === 75) frac = '¾';
+        else if (rem > 0) frac = '.' + rem;
+
+        if (whole === 0 && frac) return frac;
+        return frac ? `${whole} ${frac}` : `${whole}`;
+    }
+
+    function updateSyringeUI() {
+        const label = formatSyringeFraction(currentSyringes);
+        const plural = currentSyringes === 1 ? 'jeringa' : 'jeringas';
+        const ml = (currentSyringes * 5).toFixed(1).replace('.0', '');
+
+        document.getElementById('syringeText').textContent = `${label} ${plural}`;
+        document.getElementById('mlBadge').textContent = `${ml} ml totales`;
+
+        if (currentSyringes === 1.5) {
+            document.getElementById('syringeDesc').textContent = '1 entera de 5ml + media';
+        } else if (currentSyringes === 1) {
+            document.getElementById('syringeDesc').textContent = '1 jeringa completa de 5ml';
+        } else {
+            document.getElementById('syringeDesc').textContent = `Equivale a ${ml} ml para los 6`;
+        }
+
+        document.querySelectorAll('#quickChips .chip').forEach(chip => {
+            const chipVal = parseFloat(chip.getAttribute('onclick').match(/[\d.]+/)[0]);
+            chip.classList.toggle('active', chipVal === currentSyringes);
+        });
+
+        localStorage.setItem(SYRINGE_KEY, currentSyringes.toString());
+    }
+
+    function changeSyringe(delta) {
+        currentSyringes = Math.max(0.25, Math.round((currentSyringes + delta) * 100) / 100);
+        updateSyringeUI();
+    }
+
+    function selectSyringe(val) {
+        currentSyringes = val;
+        updateSyringeUI();
+    }
+
+    function registerFeed() {
+        const now = new Date();
+        const obs = document.getElementById('obsInput').value.trim();
+
+        const record = {
+            id: Date.now(),
+            timestamp: now.toISOString(),
+            syringes: currentSyringes,
+            ml: currentSyringes * 5,
+            note: obs
+        };
+
+        feeds.unshift(record);
+        persistFeeds();
+        tomasRef.child(String(record.id)).set(record);
+
+        document.getElementById('obsInput').value = '';
+        renderAll();
+        showToast('🍼 ¡Toma guardada en la nube!');
+    }
+
+    // Modal carga manual
+    function openManualModal() {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const hh = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+
+        document.getElementById('manualDate').value = `${yyyy}-${mm}-${dd}`;
+        document.getElementById('manualTime').value = `${hh}:${min}`;
+        document.getElementById('manualSyringe').value = currentSyringes;
+        document.getElementById('manualNote').value = '';
+        document.getElementById('manualModal').classList.add('open');
+    }
+
+    function closeManualModal() {
+        document.getElementById('manualModal').classList.remove('open');
+    }
+
+    function saveManualFeed() {
+        const dateVal = document.getElementById('manualDate').value;
+        const timeVal = document.getElementById('manualTime').value;
+        const syrVal = parseFloat(document.getElementById('manualSyringe').value) || 1.5;
+        const noteVal = document.getElementById('manualNote').value.trim();
+
+        if (!dateVal || !timeVal) {
+            showToast('Completá fecha y hora');
+            return;
+        }
+
+        const customDate = new Date(`${dateVal}T${timeVal}:00`);
+        const record = {
+            id: customDate.getTime() + Math.floor(Math.random() * 999),
+            timestamp: customDate.toISOString(),
+            syringes: syrVal,
+            ml: syrVal * 5,
+            note: noteVal
+        };
+
+        feeds.push(record);
+        persistFeeds();
+        tomasRef.child(String(record.id)).set(record);
+
+        closeManualModal();
+        renderAll();
+        showToast('✅ Toma agregada y sincronizada');
+    }
+
+    function deleteFeed(id) {
+        feeds = feeds.filter(f => f.id !== id);
+        persistFeeds();
+        tomasRef.child(String(id)).remove();
+        renderAll();
+        showToast('Registro eliminado');
+    }
+
+    function formatDuration(ms) {
+        const totalMins = Math.floor(ms / 60000);
+        const hrs = Math.floor(totalMins / 60);
+        const mins = totalMins % 60;
+        if (hrs === 0) return `${mins}m`;
+        return `${hrs}h ${mins}m`;
+    }
+
+    function updateLiveTimer() {
+        const pill = document.getElementById('statusPill');
+        const main = document.getElementById('elapsedDisplay');
+        const sub = document.getElementById('lastFeedExact');
+
+        if (feeds.length === 0) {
+            pill.textContent = 'Sin tomas registradas';
+            pill.className = 'timer-status-pill';
+            main.textContent = '— : —';
+            sub.textContent = 'Tocá TOMA PAPILLA al terminar de darles';
+            return;
+        }
+
+        const lastDate = new Date(feeds[0].timestamp);
+        const diffMs = Date.now() - lastDate.getTime();
+        const diffHours = diffMs / 3600000;
+
+        main.textContent = `Hace ${formatDuration(Math.max(0, diffMs))}`;
+
+        const timeStr = lastDate.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+        const dayStr = lastDate.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+        sub.textContent = `Última toma: ${dayStr} a las ${timeStr} (${formatSyringeFraction(feeds[0].syringes)} jer.)`;
+
+        if (diffHours >= 3) {
+            pill.textContent = '🔔 Revisar buches (ya pasaron +3h)';
+            pill.className = 'timer-status-pill alert-now';
+        } else if (diffHours >= 2) {
+            pill.textContent = '⏳ Se acerca la próxima toma';
+            pill.className = 'timer-status-pill alert-soon';
+        } else {
+            pill.textContent = '💚 Buches llenitos / Digestión';
+            pill.className = 'timer-status-pill';
+        }
+    }
+
+    function renderAll() {
+        updateLiveTimer();
+
+        const todayStr = new Date().toDateString();
+        const todayFeeds = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
+
+        document.getElementById('todayCountBadge').textContent = `${todayFeeds.length} hoy`;
+        const totalMlToday = todayFeeds.reduce((acc, f) => acc + f.ml, 0);
+        document.getElementById('todayMlDisplay').textContent = `${totalMlToday.toFixed(1).replace('.0', '')} ml`;
+
+        if (feeds.length >= 2) {
+            let totalDiff = 0;
+            let count = 0;
+            for (let i = 0; i < Math.min(feeds.length - 1, 10); i++) {
+                const d1 = new Date(feeds[i].timestamp).getTime();
+                const d2 = new Date(feeds[i + 1].timestamp).getTime();
+                const diff = d1 - d2;
+                if (diff > 0 && diff < 12 * 3600000) {
+                    totalDiff += diff;
+                    count++;
+                }
+            }
+            document.getElementById('avgIntervalDisplay').textContent = count > 0 ? `Cada ${formatDuration(totalDiff / count)}` : '—';
+        } else {
+            document.getElementById('avgIntervalDisplay').textContent = '—';
+        }
+
+        const list = document.getElementById('historyList');
+        if (feeds.length === 0) {
+            list.innerHTML = `<div class="empty-state">Todavía no hay tomas registradas.<br>Tocá <strong>TOMA PAPILLA</strong> o <strong>+ Manual</strong> para cargar una hora anterior.</div>`;
+            return;
+        }
+
+        list.innerHTML = feeds.map((item, idx) => {
+            const d = new Date(item.timestamp);
+            const timeStr = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+            const dateStr = d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+
+            let intervalHtml = '';
+            if (idx < feeds.length - 1) {
+                const prevD = new Date(feeds[idx + 1].timestamp);
+                const diff = d.getTime() - prevD.getTime();
+                if (diff > 0) {
+                    intervalHtml = `<span class="interval-badge">⏱️ ${formatDuration(diff)} después</span>`;
+                }
+            } else {
+                intervalHtml = `<span class="interval-badge">🌱 Inicio</span>`;
+            }
+
+            const syrLabel = formatSyringeFraction(item.syringes);
+            const mlLabel = item.ml.toFixed(1).replace('.0', '');
+
+            return `
+                <div class="history-item">
+                    <div class="item-left">
+                        <div class="item-top">
+                            <span class="item-time">${timeStr}</span>
+                            <span class="item-date">(${dateStr})</span>
+                            ${intervalHtml}
+                        </div>
+                        <div class="item-bottom">
+                            💉 ${syrLabel} ${item.syringes === 1 ? 'jeringa' : 'jeringas'} (${mlLabel} ml)
+                        </div>
+                        ${item.note ? `<div class="item-note">${escapeHtml(item.note)}</div>` : ''}
+                    </div>
+                    <button class="btn-del" onclick="deleteFeed(${item.id})" title="Eliminar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function copySummary() {
+        if (feeds.length === 0) {
+            showToast('No hay tomas para compartir aún');
+            return;
+        }
+        const todayStr = new Date().toDateString();
+        const todayFeeds = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
+        const listToShare = todayFeeds.length > 0 ? todayFeeds : feeds.slice(0, 8);
+
+        let text = `🪺 *Nido PichónCare (6 pichones)*\n`;
+        listToShare.slice().reverse().forEach(f => {
+            const d = new Date(f.timestamp);
+            const t = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+            text += `• ${t} — ${formatSyringeFraction(f.syringes)} jer. (${f.ml}ml)${f.note ? ` [${f.note}]` : ''}\n`;
+        });
+
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('📋 Resumen copiado al portapapeles');
+        }).catch(() => {
+            showToast('No se pudo copiar');
+        });
+    }
+
+    function exportBackup() {
+        if (feeds.length === 0) {
+            showToast('No hay datos para respaldar');
+            return;
+        }
+        const dataStr = JSON.stringify(feeds, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `respaldo-pichones-${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('💾 Archivo de respaldo descargado');
+    }
+
+    function importBackup(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (Array.isArray(imported)) {
+                    let added = 0;
+                    imported.forEach(item => {
+                        if (item.timestamp && !feeds.some(f => f.timestamp === item.timestamp)) {
+                            feeds.push(item);
+                            tomasRef.child(String(item.id || Date.now())).set(item);
+                            added++;
+                        }
+                    });
+                    persistFeeds();
+                    renderAll();
+                    showToast(`📂 Se restauraron ${added} tomas`);
+                }
+            } catch (err) {
+                showToast('Archivo inválido');
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>"']/g, m => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[m]));
+    }
+
+    updateHeaderDate();
+    updateSyringeUI();
+    renderAll();
+    setInterval(updateLiveTimer, 30000);
+</script>
+</body>
+</html>
