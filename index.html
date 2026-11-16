@@ -1,55 +1,97 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nido de Pichones — Control de Papilla</title>
+    <title>PichónCare — Control Grupal de Papilla</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        creamBg: '#FFFBEB',
+                        creamSoft: '#FEF7D7',
+                        sageCard: '#E3F2E6',
+                        sageDark: '#D8EEDB',
+                        brownBorder: '#8C6239',
+                        brownBorderMed: '#A67B5B',
+                        brownBorderSoft: '#C49A76',
+                        pinkBtn: '#FAD2E1',
+                        pinkBtnHover: '#F9A8D4',
+                        pinkBorder: '#E598B3',
+                        chocoDark: '#4A3525',
+                        chocoMed: '#735743',
+                        chocoLight: '#9C7B63'
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Fondo monocromo oscuro con sutiles destellos pastel */
+        /* Fondo amarillito pastel cremoso y tipografía marrón chocolate */
         body {
-            background-color: #0d0f14;
+            background-color: #FFFBEB;
             background-image: 
-                radial-gradient(at 15% 5%, rgba(52, 211, 153, 0.08) 0px, transparent 50%),
-                radial-gradient(at 85% 15%, rgba(56, 189, 248, 0.07) 0px, transparent 50%),
-                radial-gradient(at 50% 95%, rgba(251, 191, 36, 0.05) 0px, transparent 50%);
+                radial-gradient(at 15% 10%, #FEF3C7 0px, transparent 55%),
+                radial-gradient(at 85% 30%, #FEF7D7 0px, transparent 50%),
+                radial-gradient(at 50% 90%, #FDE68A33 0px, transparent 60%);
             background-attachment: fixed;
-            color: #f1f5f9;
+            color: #4A3525;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: contain;
         }
 
-        /* Tarjetas estilo Glassmorphism Oscuro */
-        .glass {
-            background: rgba(22, 26, 36, 0.72);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        /* Tarjetas y menús en verde pastel salvia con contorno marrón estilo ilustración */
+        .sage-menu {
+            background-color: rgba(227, 242, 230, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid #A67B5B;
+            box-shadow: 0 6px 20px -4px rgba(140, 98, 57, 0.14);
         }
 
-        .glass-strong {
-            background: rgba(16, 19, 27, 0.94);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+        .sage-modal {
+            background-color: #E3F2E6;
+            border-top: 2px solid #8C6239;
+            box-shadow: 0 -10px 30px rgba(74, 53, 37, 0.18);
         }
 
+        @media (min-width: 640px) {
+            .sage-modal {
+                border: 2px solid #8C6239;
+            }
+        }
+
+        /* Botones principales en rosa pastel con contorno marrón cálido */
+        .pink-action {
+            background: linear-gradient(135deg, #FAD2E1 0%, #F9A8D4 100%);
+            border: 1.5px solid #8C6239;
+            color: #4A3525;
+            box-shadow: 0 5px 15px rgba(140, 98, 57, 0.16);
+        }
+
+        .pink-action:active {
+            transform: scale(0.97);
+        }
+
+        .pink-pill {
+            background-color: #FAD2E1;
+            border: 1.5px solid #A67B5B;
+            color: #4A3525;
+        }
+
+        .pink-pill:hover {
+            background-color: #F9A8D4;
+        }
+
+        /* Ocultar barras de desplazamiento horizontal */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -58,250 +100,241 @@
             scrollbar-width: none;
         }
 
+        /* Inputs claros adaptados */
         input[type="date"], input[type="time"] {
-            color-scheme: dark;
+            color-scheme: light;
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.02); opacity: 0.92; }
+        /* Animaciones suaves */
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        .animate-soft-pulse {
-            animation: pulseGlow 3s ease-in-out infinite;
+        .animate-slide-up {
+            animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
         }
         .animate-fade-in {
-            animation: fadeIn 0.22s ease-out forwards;
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .animate-pulse-gentle {
+            animation: pulseHeart 2.2s infinite ease-in-out;
         }
     </style>
 </head>
-<body class="min-h-screen pb-10 select-none">
+<body class="min-h-screen pb-32 select-none font-sans">
 
-    <div class="max-w-md mx-auto min-h-screen flex flex-col px-4 pt-3 space-y-4">
+    <!-- Contenedor principal centrado -->
+    <div class="max-w-md mx-auto min-h-screen flex flex-col">
 
-        <!-- ================================================================= -->
-        <!-- 1. HEADER CON FECHA/HORA EN VIVO Y BOTÓN COPIAR RESUMEN           -->
-        <!-- ================================================================= -->
-        <header class="glass rounded-3xl px-4 py-3 flex items-center justify-between">
+        <!-- Header superior en verde pastel con borde inferior marrón -->
+        <header class="sticky top-0 z-30 sage-menu px-4 py-3.5 rounded-b-3xl border-t-0 border-x-0 border-b-2 border-[#8C6239] flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-400/20 to-amber-300/20 border border-emerald-400/30 flex items-center justify-center text-2xl shadow-inner">
+                <div class="w-11 h-11 rounded-2xl bg-[#FFFBEB] border-[1.5px] border-[#8C6239] flex items-center justify-center text-2xl shadow-sm">
                     🪺
                 </div>
                 <div>
-                    <h1 class="text-base font-extrabold tracking-tight text-white leading-tight">Nido de Pichones</h1>
-                    <p id="live-clock" class="text-xs text-slate-400 font-medium capitalize">Cargando fecha...</p>
+                    <h1 class="text-lg font-black tracking-tight text-[#4A3525] leading-tight">Nido PichónCare</h1>
+                    <p id="header-date-display" class="text-xs font-bold text-[#735743]">Cargando fecha...</p>
                 </div>
             </div>
 
-            <button onclick="copyDailySummary()" class="px-3 py-2 rounded-2xl bg-white/5 hover:bg-white/10 active:scale-95 transition border border-white/10 text-sky-300 text-xs font-semibold flex items-center gap-1.5" title="Copiar resumen del día para WhatsApp">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                </svg>
-                <span>Resumen</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <!-- Botón Copiar / Exportar Resumen -->
+                <button onclick="openExportModal()" aria-label="Exportar resumen" class="p-2.5 rounded-2xl pink-pill active:scale-95 transition" title="Copiar resumen para compartir">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#4A3525]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                </button>
+            </div>
         </header>
 
-        <!-- ================================================================= -->
-        <!-- 2. TARJETA DEL NIDO (6 PICHONES) + TEMPORIZADOR EN VIVO           -->
-        <!-- ================================================================= -->
-        <section id="hero-status-card" class="glass rounded-3xl p-4 space-y-4 relative overflow-hidden transition-colors duration-500">
-            <!-- Composición visual de los 6 pichones juntos -->
-            <div class="flex flex-col gap-2 pb-3 border-b border-white/10">
+        <!-- Contenido Principal -->
+        <main class="flex-1 px-4 pt-4 space-y-5">
+
+            <!-- TARJETA 1: ESTADO DEL NIDO (LOS 6 PICHONES JUNTOS) -->
+            <section class="sage-menu rounded-3xl p-4 space-y-3.5">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                        <span>🐣</span> 6 Pichones en el nido
-                    </span>
-                    <span class="text-[11px] text-slate-400 font-medium">Por buche vacío → llenito</span>
-                </div>
-
-                <!-- Píldoras visuales de tamaños -->
-                <div class="grid grid-cols-3 gap-2 pt-0.5">
-                    <div class="bg-white/5 border border-white/10 rounded-2xl py-1.5 px-2 text-center">
-                        <div class="text-xs font-extrabold text-pink-300">2 Chiquitos</div>
-                        <div class="text-[10px] text-slate-400">🐥🐥</div>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 rounded-2xl py-1.5 px-2 text-center">
-                        <div class="text-xs font-extrabold text-amber-300">1 Mediano</div>
-                        <div class="text-[10px] text-slate-400">🐤</div>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 rounded-2xl py-1.5 px-2 text-center">
-                        <div class="text-xs font-extrabold text-emerald-300">3 Grandecitos</div>
-                        <div class="text-[10px] text-slate-400">🐦🐦🐦</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contador Hero: Tiempo transcurrido desde la última toma -->
-            <div class="text-center py-1 space-y-1.5">
-                <div id="status-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border bg-emerald-400/15 text-emerald-300 border-emerald-400/30">
-                    <span id="status-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span id="status-label">Esperando primera toma</span>
-                </div>
-
-                <div class="pt-1">
-                    <p class="text-xs text-slate-400 font-medium">Última toma hace:</p>
-                    <div id="elapsed-hero" class="text-4xl font-extrabold tracking-tight text-white my-0.5">
-                        --h --m
-                    </div>
-                    <p id="last-feed-exact" class="text-xs text-slate-400">
-                        Aún no hay tomas registradas hoy
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================================================================= -->
-        <!-- 3. PANEL DE ACCIÓN RÁPIDA: JERINGAS (5ML) + BOTÓN "TOMA PAPILLA"  -->
-        <!-- ================================================================= -->
-        <section class="glass rounded-3xl p-4 space-y-3.5 border border-emerald-400/20">
-            <!-- Selector rápido de cantidad de jeringas de 5ml para los 6 -->
-            <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                    <label class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                        <span>💉</span> Cantidad para los 6 <span class="text-slate-400 font-normal">(jeringa 5ml)</span>
-                    </label>
-                    <span id="syringe-ml-badge" class="text-xs font-extrabold text-sky-300 bg-sky-400/10 border border-sky-400/25 px-2.5 py-0.5 rounded-full">
-                        7.5 ml total
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-[#735743]">Los 6 del Nidito</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-[#FFFBEB] border border-[#A67B5B] text-[11px] font-extrabold text-[#4A3525]">
+                        Buche vacío ➔ llenitos
                     </span>
                 </div>
 
-                <!-- Stepper + Chips rápidos -->
-                <div class="flex items-center gap-2">
-                    <button type="button" onclick="adjustSyringe(-0.5)" aria-label="Restar media jeringa" class="w-11 h-11 rounded-2xl bg-white/5 hover:bg-white/10 active:scale-95 border border-white/10 text-lg font-bold text-slate-200 flex items-center justify-center shrink-0">
+                <!-- Desglose visual de los 6 pichones por tamaño -->
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="bg-[#FFFBEB]/90 border-[1.5px] border-[#C49A76] rounded-2xl p-2.5 text-center">
+                        <div class="text-lg leading-none mb-1">🐣🐣</div>
+                        <div class="text-sm font-black text-[#4A3525]">2</div>
+                        <div class="text-[11px] font-bold text-[#735743]">Chiquitos</div>
+                    </div>
+                    <div class="bg-[#FFFBEB]/90 border-[1.5px] border-[#C49A76] rounded-2xl p-2.5 text-center">
+                        <div class="text-lg leading-none mb-1">🐥</div>
+                        <div class="text-sm font-black text-[#4A3525]">1</div>
+                        <div class="text-[11px] font-bold text-[#735743]">Mediano</div>
+                    </div>
+                    <div class="bg-[#FFFBEB]/90 border-[1.5px] border-[#C49A76] rounded-2xl p-2.5 text-center">
+                        <div class="text-lg leading-none mb-1">🐦🐦🐦</div>
+                        <div class="text-sm font-black text-[#4A3525]">3</div>
+                        <div class="text-[11px] font-bold text-[#735743]">Grandecitos</div>
+                    </div>
+                </div>
+
+                <!-- Temporizador en vivo desde la última toma -->
+                <div id="timer-card" class="bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-colors">
+                    <div>
+                        <p class="text-[11px] font-extrabold uppercase tracking-wide text-[#735743]">Última toma hace:</p>
+                        <p id="live-elapsed-text" class="text-2xl font-black text-[#4A3525] leading-tight mt-0.5">Sin tomas aún</p>
+                        <p id="last-feed-detail" class="text-xs font-semibold text-[#735743] mt-0.5">Toca "TOMA PAPILLA" al terminar</p>
+                    </div>
+                    <div id="status-pill" class="px-3 py-2 rounded-2xl bg-[#E3F2E6] border-[1.5px] border-[#8C6239] text-center shrink-0">
+                        <span id="status-emoji" class="text-xl block">⏱️</span>
+                        <span id="status-label" class="text-[10px] font-extrabold text-[#4A3525] uppercase">Listo</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TARJETA 2: MEDIDA ACTUAL DE JERINGAS DE 5 ML (PARA LOS 6) -->
+            <section class="sage-menu rounded-3xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xs font-extrabold uppercase tracking-wider text-[#735743]">Medida Actual (6 pichones)</h2>
+                        <p class="text-[11px] font-semibold text-[#9C7B63]">Jeringas de 5 ml usadas en total</p>
+                    </div>
+                    <span id="total-ml-badge" class="px-3 py-1 rounded-full bg-[#FFFBEB] border-[1.5px] border-[#8C6239] text-xs font-black text-[#4A3525]">
+                        = 7.5 ml
+                    </span>
+                </div>
+
+                <!-- Control táctil de jeringas (incrementos de 0.5 jeringas) -->
+                <div class="bg-[#FFFBEB] border-[1.5px] border-[#A67B5B] rounded-2xl p-3 flex items-center justify-between gap-2">
+                    <button type="button" onclick="adjustSyringes(-0.5)" aria-label="Restar media jeringa" class="w-11 h-11 rounded-2xl pink-pill font-black text-xl flex items-center justify-center active:scale-90 transition">
                         −
                     </button>
 
-                    <div class="flex-1 bg-slate-900/80 border border-white/10 rounded-2xl py-2 px-3 text-center">
-                        <div id="syringe-display-text" class="text-sm font-extrabold text-white">
-                            1.5 jeringas
+                    <div class="text-center flex-1">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <span class="text-lg">💉</span>
+                            <span id="syringe-count-display" class="text-xl font-black text-[#4A3525]">1 ½ jeringas</span>
                         </div>
-                        <div id="syringe-sub-text" class="text-[11px] text-emerald-300/90 font-medium">
-                            1 entera de 5ml + ½
-                        </div>
+                        <p id="syringe-desc-display" class="text-xs font-bold text-[#735743]">1 entera de 5ml + ½ (7.5 ml)</p>
                     </div>
 
-                    <button type="button" onclick="adjustSyringe(0.5)" aria-label="Sumar media jeringa" class="w-11 h-11 rounded-2xl bg-white/5 hover:bg-white/10 active:scale-95 border border-white/10 text-lg font-bold text-slate-200 flex items-center justify-center shrink-0">
+                    <button type="button" onclick="adjustSyringes(0.5)" aria-label="Sumar media jeringa" class="w-11 h-11 rounded-2xl pink-pill font-black text-xl flex items-center justify-center active:scale-90 transition">
                         +
                     </button>
                 </div>
 
-                <!-- Chips de acceso directo conforme crecen -->
-                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5">
-                    <button type="button" onclick="setSyringe(1)" data-syr="1" class="syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-white/5 text-slate-300 border border-white/10">1 jer (5ml)</button>
-                    <button type="button" onclick="setSyringe(1.5)" data-syr="1.5" class="syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-bold bg-emerald-400/20 text-emerald-300 border border-emerald-400/40">1.5 jer (7.5ml)</button>
-                    <button type="button" onclick="setSyringe(2)" data-syr="2" class="syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-white/5 text-slate-300 border border-white/10">2 jer (10ml)</button>
-                    <button type="button" onclick="setSyringe(2.5)" data-syr="2.5" class="syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-white/5 text-slate-300 border border-white/10">2.5 jer (12.5ml)</button>
-                    <button type="button" onclick="setSyringe(3)" data-syr="3" class="syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-white/5 text-slate-300 border border-white/10">3 jer (15ml)</button>
+                <!-- Accesos rápidos de jeringas -->
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                    <span class="text-[11px] font-bold text-[#735743] shrink-0 mr-1">Rápido:</span>
+                    <button type="button" onclick="setSyringes(1)" class="syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-extrabold border border-[#A67B5B] bg-[#FFFBEB] text-[#4A3525] transition">1 jer.</button>
+                    <button type="button" onclick="setSyringes(1.5)" class="syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-extrabold border border-[#8C6239] bg-[#FAD2E1] text-[#4A3525] transition">1 ½ jer.</button>
+                    <button type="button" onclick="setSyringes(2)" class="syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-extrabold border border-[#A67B5B] bg-[#FFFBEB] text-[#4A3525] transition">2 jer.</button>
+                    <button type="button" onclick="setSyringes(2.5)" class="syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-extrabold border border-[#A67B5B] bg-[#FFFBEB] text-[#4A3525] transition">2 ½ jer.</button>
+                    <button type="button" onclick="setSyringes(3)" class="syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-extrabold border border-[#A67B5B] bg-[#FFFBEB] text-[#4A3525] transition">3 jer.</button>
                 </div>
-            </div>
 
-            <!-- Observación rápida opcional -->
-            <div class="space-y-1.5">
-                <input type="text" id="quick-note" placeholder="Observación opcional (ej: buches vacíos, los 2 chiquitos bien...)" class="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400/50">
-                <div class="flex gap-1.5 overflow-x-auto no-scrollbar">
-                    <button type="button" onclick="setQuickNote('Buches vacíos, todos llenitos')" class="shrink-0 px-2.5 py-1 rounded-xl bg-white/5 hover:bg-white/10 text-[11px] text-slate-300 border border-white/5">+ Buches vacíos → llenitos</button>
-                    <button type="button" onclick="setQuickNote('Los 2 chiquitos comieron muy bien')" class="shrink-0 px-2.5 py-1 rounded-xl bg-white/5 hover:bg-white/10 text-[11px] text-slate-300 border border-white/5">+ 2 chiquitos bien</button>
-                    <button type="button" onclick="setQuickNote('Aumentamos un poquito la dosis')" class="shrink-0 px-2.5 py-1 rounded-xl bg-white/5 hover:bg-white/10 text-[11px] text-slate-300 border border-white/5">+ Subimos dosis</button>
+                <!-- Observación rápida para la próxima toma -->
+                <div class="pt-1 border-t border-dashed border-[#C49A76]">
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="quick-note-input" oninput="saveDraftNote()" placeholder="Observación opcional (ej: aumentamos medida, buches bien vacíos...)" class="w-full bg-[#FFFBEB] border-[1.5px] border-[#C49A76] rounded-xl px-3 py-2 text-xs font-semibold text-[#4A3525] placeholder-[#9C7B63] focus:outline-none focus:border-[#8C6239]">
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- BOTÓN PRINCIPAL DE UN SOLO TOQUE -->
-            <button type="button" onclick="registerFeedingNow()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-300 hover:brightness-105 active:scale-[0.98] transition-all shadow-lg shadow-emerald-500/25 flex flex-col items-center justify-center text-slate-950">
-                <span class="text-lg font-extrabold tracking-tight flex items-center gap-2">
-                    <span>🍼</span> TOMA PAPILLA
-                </span>
-                <span id="btn-live-stamp" class="text-[11px] font-bold text-slate-900/80">
-                    Registrar ahora automáticamente
-                </span>
-            </button>
-        </section>
+            <!-- TARJETA 3: HISTORIAL Y FRECUENCIA DE TOMAS -->
+            <section class="space-y-3">
+                <div class="flex items-center justify-between px-1">
+                    <div>
+                        <h2 class="text-xs font-extrabold uppercase tracking-wider text-[#735743]">Historial de Tomas</h2>
+                        <p id="avg-interval-text" class="text-[11px] font-bold text-[#9C7B63]">Intervalo entre tomas</p>
+                    </div>
+                    <span id="feed-count-badge" class="px-2.5 py-1 rounded-full bg-[#E3F2E6] border-[1.5px] border-[#A67B5B] text-xs font-extrabold text-[#4A3525]">
+                        0 tomas
+                    </span>
+                </div>
 
-        <!-- ================================================================= -->
-        <!-- 4. RESUMEN INTUITIVO DEL DÍA (FRECUENCIA PROMEDIO)                -->
-        <!-- ================================================================= -->
-        <section class="grid grid-cols-3 gap-2">
-            <div class="glass rounded-2xl p-3 text-center">
-                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Tomas Hoy</div>
-                <div id="stat-today-count" class="text-lg font-extrabold text-white mt-0.5">0</div>
-            </div>
-            <div class="glass rounded-2xl p-3 text-center">
-                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Frecuencia</div>
-                <div id="stat-avg-interval" class="text-sm font-extrabold text-amber-300 mt-1">--</div>
-            </div>
-            <div class="glass rounded-2xl p-3 text-center">
-                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Total Hoy</div>
-                <div id="stat-today-syringes" class="text-sm font-extrabold text-sky-300 mt-1">0 jer</div>
-            </div>
-        </section>
+                <!-- Filtro por fecha en verde pastel con borde marrón -->
+                <div class="sage-menu rounded-2xl p-2.5 flex items-center gap-2">
+                    <span class="text-xs font-extrabold text-[#735743] pl-1">📅 Fecha:</span>
+                    <input type="date" id="filter-date" onchange="renderHistory()" class="flex-1 bg-[#FFFBEB] border-[1.5px] border-[#A67B5B] rounded-xl px-3 py-1.5 text-xs font-bold text-[#4A3525] focus:outline-none focus:border-[#8C6239]">
+                    <button id="clear-date-btn" onclick="clearDateFilter()" class="hidden px-3 py-1.5 rounded-xl pink-pill text-xs font-extrabold active:scale-95 transition">
+                        Ver todas
+                    </button>
+                </div>
 
-        <!-- ================================================================= -->
-        <!-- 5. HISTORIAL CRONOLÓGICO CON INTERVALOS ENTRE TOMAS               -->
-        <!-- ================================================================= -->
-        <section class="space-y-3 pt-1">
-            <div class="flex items-center justify-between px-1">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Historial de Tomas e Intervalos</h2>
-                <button onclick="openManualModal()" class="text-xs font-semibold text-emerald-300 hover:text-emerald-200 flex items-center gap-1">
-                    <span>+ Hora manual</span>
+                <!-- Lista de registros -->
+                <div id="history-list" class="space-y-2.5">
+                    <!-- Renderizado dinámicamente -->
+                </div>
+            </section>
+
+        </main>
+
+        <!-- BOTÓN PRINCIPAL FIJO ABAJO: UN SOLO TOQUE "TOMA PAPILLA" -->
+        <div class="fixed bottom-0 left-0 right-0 z-30 pointer-events-none">
+            <div class="max-w-md mx-auto p-4 bg-gradient-to-t from-[#FFFBEB] via-[#FFFBEB]/95 to-transparent">
+                <button onclick="registerInstantFeeding()" class="pointer-events-auto w-full py-4 px-6 rounded-3xl pink-action hover:brightness-[0.98] transition-all flex items-center justify-center gap-3 text-[#4A3525] font-black text-lg tracking-wide">
+                    <span class="text-2xl animate-pulse-gentle">🍼</span>
+                    <span>TOMA PAPILLA</span>
                 </button>
             </div>
-
-            <div id="history-container" class="space-y-4">
-                <!-- Renderizado por JS agrupado por fecha -->
-            </div>
-        </section>
-
-        <!-- Pie informativo -->
-        <footer class="pt-4 pb-6 text-center">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-[11px] text-slate-400">
-                <span>🪺</span> Modo Nido Grupal (6 pichones) • Guardado automático en este dispositivo
-            </span>
-        </footer>
+        </div>
 
     </div>
 
     <!-- ===================================================================== -->
-    <!-- MODAL: EDITAR / AGREGAR TOMA CON HORA MANUAL                          -->
+    <!-- MODAL 1: EDITAR TOMA (SI SE QUIERE AJUSTAR HORA O NOTA)                -->
     <!-- ===================================================================== -->
-    <div id="edit-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="glass-strong w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 pb-8 sm:pb-6 space-y-4 animate-fade-in">
-            <div class="flex items-center justify-between">
-                <h3 id="modal-title" class="text-base font-bold text-white">Editar Toma</h3>
-                <button onclick="closeModal('edit-modal')" class="p-2 rounded-full bg-white/5 text-slate-400 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <div id="edit-modal" class="fixed inset-0 z-50 hidden bg-[#4A3525]/40 backdrop-blur-xs flex items-end sm:items-center justify-center">
+        <div class="sage-modal w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 pb-8 sm:pb-6 animate-slide-up">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">✏️</span>
+                    <h3 class="text-lg font-black text-[#4A3525]">Editar Registro</h3>
+                </div>
+                <button onclick="closeModal('edit-modal')" class="p-2 rounded-full pink-pill text-[#4A3525]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
 
-            <form onsubmit="saveEditedFeed(event)" class="space-y-3.5">
+            <form onsubmit="saveEditedFeeding(event)" class="space-y-4">
                 <input type="hidden" id="edit-feed-id">
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label for="edit-date" class="block text-xs font-semibold text-slate-300 mb-1">Fecha</label>
-                        <input type="date" id="edit-date" required class="w-full bg-slate-900 border border-white/15 rounded-2xl px-3.5 py-2.5 text-sm text-white">
+                        <label for="edit-date" class="block text-xs font-extrabold text-[#4A3525] mb-1">Fecha</label>
+                        <input type="date" id="edit-date" required class="w-full bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl px-3.5 py-2.5 text-sm font-bold text-[#4A3525] focus:outline-none">
                     </div>
                     <div>
-                        <label for="edit-time" class="block text-xs font-semibold text-slate-300 mb-1">Hora</label>
-                        <input type="time" id="edit-time" required class="w-full bg-slate-900 border border-white/15 rounded-2xl px-3.5 py-2.5 text-sm text-white">
+                        <label for="edit-time" class="block text-xs font-extrabold text-[#4A3525] mb-1">Hora</label>
+                        <input type="time" id="edit-time" required class="w-full bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl px-3.5 py-2.5 text-sm font-bold text-[#4A3525] focus:outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <label for="edit-syringes" class="block text-xs font-semibold text-slate-300 mb-1">Jeringas de 5ml (para los 6)</label>
-                    <input type="number" step="0.25" min="0.25" max="20" id="edit-syringes" required class="w-full bg-slate-900 border border-white/15 rounded-2xl px-3.5 py-2.5 text-sm text-white">
+                    <label for="edit-syringes" class="block text-xs font-extrabold text-[#4A3525] mb-1">Jeringas de 5 ml usadas (los 6)</label>
+                    <input type="number" step="0.5" min="0.5" max="20" id="edit-syringes" required class="w-full bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl px-3.5 py-2.5 text-sm font-bold text-[#4A3525] focus:outline-none">
                 </div>
 
                 <div>
-                    <label for="edit-note" class="block text-xs font-semibold text-slate-300 mb-1">Observación</label>
-                    <input type="text" id="edit-note" placeholder="Notas sobre los 6 pichones..." class="w-full bg-slate-900 border border-white/15 rounded-2xl px-3.5 py-2.5 text-sm text-white">
+                    <label for="edit-notes" class="block text-xs font-extrabold text-[#4A3525] mb-1">Observación</label>
+                    <input type="text" id="edit-notes" placeholder="Ej: Todos quedaron con buche llenito" class="w-full bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl px-3.5 py-2.5 text-sm font-semibold text-[#4A3525] focus:outline-none">
                 </div>
 
-                <button type="submit" class="w-full py-3.5 rounded-2xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-sm transition">
+                <button type="submit" class="w-full py-3.5 rounded-2xl pink-action font-black text-base">
                     Guardar Cambios
                 </button>
             </form>
@@ -309,71 +342,113 @@
     </div>
 
     <!-- ===================================================================== -->
-    <!-- MODAL: CONFIRMACIÓN DE ELIMINACIÓN                                    -->
+    <!-- MODAL 2: EXPORTAR / COPIAR RESUMEN                                    -->
     <!-- ===================================================================== -->
-    <div id="confirm-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="glass-strong w-full max-w-xs rounded-3xl p-5 text-center space-y-4 animate-fade-in">
-            <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-300 flex items-center justify-center mx-auto text-2xl">
+    <div id="export-modal" class="fixed inset-0 z-50 hidden bg-[#4A3525]/40 backdrop-blur-xs flex items-end sm:items-center justify-center">
+        <div class="sage-modal w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 pb-8 sm:pb-6 animate-slide-up">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">📋</span>
+                    <h3 class="text-lg font-black text-[#4A3525]">Resumen del Nidito</h3>
+                </div>
+                <button onclick="closeModal('export-modal')" class="p-2 rounded-full pink-pill text-[#4A3525]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <p class="text-xs font-semibold text-[#735743] mb-3">Copia este seguimiento para guardarlo en tus notas o compartirlo.</p>
+            
+            <textarea id="export-text" readonly rows="8" class="w-full bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl p-3.5 text-xs font-mono font-semibold text-[#4A3525] focus:outline-none mb-4 leading-relaxed"></textarea>
+
+            <div class="grid grid-cols-2 gap-2.5">
+                <button onclick="copySummary()" class="py-3.5 px-4 rounded-2xl pink-action font-extrabold text-sm flex items-center justify-center gap-2">
+                    <span>Copiar Texto</span>
+                </button>
+                <button onclick="downloadJSON()" class="py-3.5 px-4 rounded-2xl bg-[#FFFBEB] border-[1.5px] border-[#8C6239] text-[#4A3525] font-extrabold text-sm flex items-center justify-center gap-2 active:scale-95 transition">
+                    <span>Respaldo JSON</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 3: CONFIRMACIÓN PERSONALIZADA                                   -->
+    <!-- ===================================================================== -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 hidden bg-[#4A3525]/45 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="sage-menu w-full max-w-xs rounded-3xl p-5 border-2 border-[#8C6239] animate-fade-in text-center space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-[#FAD2E1] border-[1.5px] border-[#8C6239] text-[#4A3525] flex items-center justify-center mx-auto text-2xl">
                 🗑️
             </div>
             <div>
-                <h4 class="text-base font-bold text-white">¿Borrar esta toma?</h4>
-                <p class="text-xs text-slate-400 mt-1">Se recalcularán los intervalos automáticamente.</p>
+                <h4 class="text-base font-black text-[#4A3525]">¿Eliminar esta toma?</h4>
+                <p class="text-xs font-semibold text-[#735743] mt-1">Se quitará del historial del nidito.</p>
             </div>
-            <div class="grid grid-cols-2 gap-2.5">
-                <button onclick="closeModal('confirm-modal')" class="py-3 rounded-2xl bg-white/5 text-slate-300 text-xs font-semibold border border-white/10">
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
+                <button onclick="closeModal('confirm-modal')" class="py-3 rounded-2xl bg-[#FFFBEB] border-[1.5px] border-[#8C6239] text-[#4A3525] text-xs font-extrabold">
                     Cancelar
                 </button>
-                <button id="confirm-delete-btn" class="py-3 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white text-xs font-bold">
-                    Borrar
+                <button id="confirm-delete-btn" class="py-3 rounded-2xl pink-action text-[#4A3525] text-xs font-black">
+                    Sí, eliminar
                 </button>
             </div>
         </div>
     </div>
 
     <!-- ===================================================================== -->
-    <!-- TOAST DE CONFIRMACIÓN                                                 -->
+    <!-- TOAST DE NOTIFICACIÓN RÁPIDA                                          -->
     <!-- ===================================================================== -->
-    <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden pointer-events-none w-max max-w-[90vw]">
-        <div class="glass-strong px-4 py-2.5 rounded-full border border-emerald-400/40 shadow-2xl flex items-center gap-2 text-xs font-bold text-emerald-200">
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden pointer-events-none">
+        <div class="bg-[#FAD2E1] border-2 border-[#8C6239] px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2 text-xs font-black text-[#4A3525]">
             <span id="toast-icon">🍼</span>
-            <span id="toast-text">¡Toma registrada!</span>
+            <span id="toast-msg">¡Toma registrada!</span>
         </div>
     </div>
 
     <!-- ===================================================================== -->
-    <!-- JAVASCRIPT: LÓGICA DE NIDO GRUPAL E INTERVALOS                        -->
+    <!-- LÓGICA JAVASCRIPT                                                     -->
     <!-- ===================================================================== -->
     <script>
-        const STORAGE_KEY = 'nido_pichones_grupal_v1';
-        const SYRINGE_PREF_KEY = 'nido_pichones_syringe_pref_v1';
+        // Claves de persistencia local
+        const STORAGE_FEEDS_KEY = 'pichoncare_nest_feeds_v2';
+        const STORAGE_SETTINGS_KEY = 'pichoncare_nest_settings_v2';
 
+        // Estado global
         let feedings = [];
-        let currentSyringeCount = 1.5; // Por defecto: 1 entera de 5ml + ½ (7.5ml)
+        let currentSyringes = 1.5; // Por defecto: 1 entera de 5ml + mitad de otra
+        let draftNote = '';
 
         // =====================================================================
         // INICIALIZACIÓN
         // =====================================================================
-        function init() {
-            loadFromStorage();
-            updateSyringeUI();
-            updateClockAndLiveStatus();
+        function initApp() {
+            loadState();
+            updateHeaderDate();
+            renderSyringeUI();
             renderAll();
 
-            // Actualizar reloj y contador de tiempo transcurrido cada segundo
+            // Actualizar fecha y temporizadores en vivo cada 20 segundos
             setInterval(() => {
-                updateClockAndLiveStatus();
-            }, 1000);
+                updateHeaderDate();
+                updateStatusCard();
+            }, 20000);
         }
 
-        function loadFromStorage() {
+        function loadState() {
             try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                feedings = raw ? JSON.parse(raw) : [];
+                const rawFeeds = localStorage.getItem(STORAGE_FEEDS_KEY);
+                const rawSettings = localStorage.getItem(STORAGE_SETTINGS_KEY);
 
-                const savedSyr = localStorage.getItem(SYRINGE_PREF_KEY);
-                if (savedSyr && !isNaN(parseFloat(savedSyr))) {
-                    currentSyringeCount = parseFloat(savedSyr);
+                feedings = rawFeeds ? JSON.parse(rawFeeds) : [];
+                if (rawSettings) {
+                    const parsed = JSON.parse(rawSettings);
+                    if (typeof parsed.currentSyringes === 'number') {
+                        currentSyringes = parsed.currentSyringes;
+                    }
+                    if (typeof parsed.draftNote === 'string') {
+                        draftNote = parsed.draftNote;
+                        document.getElementById('quick-note-input').value = draftNote;
+                    }
                 }
             } catch (e) {
                 console.error('Error leyendo localStorage:', e);
@@ -381,116 +456,45 @@
             }
         }
 
-        function saveToStorage() {
+        function saveFeeds() {
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(feedings));
-                localStorage.setItem(SYRINGE_PREF_KEY, String(currentSyringeCount));
+                localStorage.setItem(STORAGE_FEEDS_KEY, JSON.stringify(feedings));
             } catch (e) {
-                showToast('No se pudo guardar en memoria', '⚠️');
+                showToast('Error al guardar en memoria', '⚠️');
+            }
+        }
+
+        function saveSettings() {
+            try {
+                localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify({
+                    currentSyringes,
+                    draftNote
+                }));
+            } catch (e) {
+                console.error(e);
             }
         }
 
         // =====================================================================
-        // MANEJO DE JERINGAS (1 jeringa = 5 ml)
+        // FECHAS, HORAS E INTERVALOS
         // =====================================================================
-        function adjustSyringe(delta) {
-            const next = Math.round((currentSyringeCount + delta) * 4) / 4;
-            if (next >= 0.5 && next <= 15) {
-                currentSyringeCount = next;
-                saveToStorage();
-                updateSyringeUI();
-            }
-        }
-
-        function setSyringe(val) {
-            currentSyringeCount = val;
-            saveToStorage();
-            updateSyringeUI();
-        }
-
-        function formatSyringeLabel(count) {
-            const ml = Number((count * 5).toFixed(1));
-            let text = `${count} ${count === 1 ? 'jeringa' : 'jeringas'}`;
-            let sub = `${ml} ml en total`;
-
-            if (count === 1) {
-                sub = '1 entera de 5ml';
-            } else if (count === 1.5) {
-                sub = '1 entera de 5ml + ½';
-            } else if (count % 1 === 0.5) {
-                const whole = Math.floor(count);
-                sub = `${whole} enteras de 5ml + ½`;
-            } else if (Number.isInteger(count)) {
-                sub = `${count} enteras de 5ml`;
-            }
-
-            return { text, sub, ml };
-        }
-
-        function updateSyringeUI() {
-            const info = formatSyringeLabel(currentSyringeCount);
-            document.getElementById('syringe-display-text').textContent = info.text;
-            document.getElementById('syringe-sub-text').textContent = info.sub;
-            document.getElementById('syringe-ml-badge').textContent = `${info.ml} ml total`;
-
-            document.querySelectorAll('.syr-chip').forEach(chip => {
-                const val = parseFloat(chip.getAttribute('data-syr'));
-                if (val === currentSyringeCount) {
-                    chip.className = 'syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-bold bg-emerald-400/20 text-emerald-300 border border-emerald-400/40';
-                } else {
-                    chip.className = 'syr-chip shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-white/5 text-slate-300 border border-white/10';
-                }
-            });
-        }
-
-        function setQuickNote(text) {
-            const input = document.getElementById('quick-note');
-            input.value = text;
-        }
-
-        // =====================================================================
-        // REGISTRO DE TOMA CON UN TOQUE ("TOMA PAPILLA")
-        // =====================================================================
-        function registerFeedingNow() {
+        function updateHeaderDate() {
             const now = new Date();
-            const dateStr = getLocalISODate(now);
-            const timeStr = getLocalHHMM(now);
-            const noteInput = document.getElementById('quick-note');
-            const note = noteInput.value.trim();
-
-            const newEntry = {
-                id: 'toma_' + Date.now(),
-                date: dateStr,
-                time: timeStr,
-                timestamp: now.getTime(),
-                syringes: currentSyringeCount,
-                note: note
-            };
-
-            feedings.push(newEntry);
-            saveToStorage();
-
-            // Limpiar nota rápida tras registrar
-            noteInput.value = '';
-
-            renderAll();
-            updateClockAndLiveStatus();
-            showToast(`¡Toma registrada a las ${timeStr} hs! (${currentSyringeCount} jer)`, '🍼');
+            const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+            let formatted = now.toLocaleDateString('es-ES', opciones);
+            formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+            document.getElementById('header-date-display').textContent = formatted;
         }
 
-        // =====================================================================
-        // CÁLCULO DE FECHAS, HORAS E INTERVALOS
-        // =====================================================================
-        function getLocalISODate(dateObj = new Date()) {
-            const offset = dateObj.getTimezoneOffset();
-            const local = new Date(dateObj.getTime() - offset * 60000);
-            return local.toISOString().split('T')[0];
+        function getTodayISO() {
+            const now = new Date();
+            const offset = now.getTimezoneOffset();
+            return new Date(now.getTime() - (offset * 60 * 1000)).toISOString().split('T')[0];
         }
 
-        function getLocalHHMM(dateObj = new Date()) {
-            const h = String(dateObj.getHours()).padStart(2, '0');
-            const m = String(dateObj.getMinutes()).padStart(2, '0');
-            return `${h}:${m}`;
+        function getCurrentTimeHHMM() {
+            const now = new Date();
+            return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
         }
 
         function parseTimestamp(dateStr, timeStr) {
@@ -499,388 +503,421 @@
             return new Date(y, m - 1, d, hh, mm, 0, 0).getTime();
         }
 
-        function formatDuration(ms) {
-            if (ms < 0) return '0m';
-            const totalMins = Math.floor(ms / 60000);
+        function formatDuration(diffMs) {
+            if (diffMs < 0) return 'Programada';
+            const totalMins = Math.floor(diffMs / 60000);
+            if (totalMins < 1) return 'Recién ahora';
+            if (totalMins < 60) return `${totalMins} min`;
+
             const hours = Math.floor(totalMins / 60);
             const mins = totalMins % 60;
-
-            if (hours === 0) return `${mins}m`;
-            if (mins === 0) return `${hours}h`;
-            return `${hours}h ${mins}m`;
+            if (hours < 24) {
+                return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+            }
+            const days = Math.floor(hours / 24);
+            const remH = hours % 24;
+            return remH > 0 ? `${days}d ${remH}h` : `${days}d`;
         }
 
-        function formatFriendlyDate(dateStr) {
-            const today = getLocalISODate(new Date());
+        function formatDisplayDate(dateStr) {
+            const today = getTodayISO();
             if (dateStr === today) return 'Hoy';
 
             const yest = new Date();
             yest.setDate(yest.getDate() - 1);
-            if (dateStr === getLocalISODate(yest)) return 'Ayer';
+            const offset = yest.getTimezoneOffset();
+            const yestISO = new Date(yest.getTime() - (offset * 60 * 1000)).toISOString().split('T')[0];
+            if (dateStr === yestISO) return 'Ayer';
 
             const [y, m, d] = dateStr.split('-');
-            const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-            return `${Number(d)} ${months[Number(m) - 1]}`;
+            return `${d}/${m}/${y.slice(2)}`;
         }
 
         // =====================================================================
-        // RELOJ EN VIVO Y ESTADO DEL NIDO
+        // CONTROL DE JERINGAS DE 5 ML
         // =====================================================================
-        function updateClockAndLiveStatus() {
-            const now = new Date();
+        function formatSyringeLabel(val) {
+            const whole = Math.floor(val);
+            const hasHalf = (val % 1) !== 0;
+            if (whole === 0 && hasHalf) return '½ jeringa';
+            if (whole === 1 && !hasHalf) return '1 jeringa';
+            if (hasHalf) return `${whole} ½ jeringas`;
+            return `${whole} jeringas`;
+        }
 
-            // Reloj superior
-            const dateFormatted = now.toLocaleDateString('es-AR', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'short'
+        function formatSyringeDetail(val) {
+            const ml = Number((val * 5).toFixed(1));
+            const whole = Math.floor(val);
+            const hasHalf = (val % 1) !== 0;
+
+            if (whole === 0 && hasHalf) return `Media jeringa de 5ml (${ml} ml)`;
+            if (whole === 1 && hasHalf) return `1 entera de 5ml + ½ (${ml} ml)`;
+            if (whole > 1 && hasHalf) return `${whole} enteras de 5ml + ½ (${ml} ml)`;
+            if (whole === 1) return `1 entera de 5ml (${ml} ml)`;
+            return `${whole} enteras de 5ml (${ml} ml)`;
+        }
+
+        function adjustSyringes(delta) {
+            const next = Math.max(0.5, Math.min(20, currentSyringes + delta));
+            currentSyringes = next;
+            saveSettings();
+            renderSyringeUI();
+        }
+
+        function setSyringes(val) {
+            currentSyringes = val;
+            saveSettings();
+            renderSyringeUI();
+        }
+
+        function saveDraftNote() {
+            draftNote = document.getElementById('quick-note-input').value;
+            saveSettings();
+        }
+
+        function renderSyringeUI() {
+            const ml = Number((currentSyringes * 5).toFixed(1));
+            document.getElementById('syringe-count-display').textContent = formatSyringeLabel(currentSyringes);
+            document.getElementById('syringe-desc-display').textContent = formatSyringeDetail(currentSyringes);
+            document.getElementById('total-ml-badge').textContent = `= ${ml} ml`;
+
+            // Resaltar botón rápido activo con contorno marrón oscuro
+            document.querySelectorAll('.syringe-quick-btn').forEach(btn => {
+                const text = btn.textContent.trim();
+                const isMatch =
+                    (currentSyringes === 1 && text === '1 jer.') ||
+                    (currentSyringes === 1.5 && text === '1 ½ jer.') ||
+                    (currentSyringes === 2 && text === '2 jer.') ||
+                    (currentSyringes === 2.5 && text === '2 ½ jer.') ||
+                    (currentSyringes === 3 && text === '3 jer.');
+
+                if (isMatch) {
+                    btn.className = 'syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-black border-[1.5px] border-[#8C6239] bg-[#FAD2E1] text-[#4A3525] transition';
+                } else {
+                    btn.className = 'syringe-quick-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-extrabold border border-[#A67B5B] bg-[#FFFBEB] text-[#4A3525] transition';
+                }
             });
-            const timeFormatted = now.toLocaleTimeString('es-AR', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
+        }
 
-            document.getElementById('live-clock').textContent = `${dateFormatted} • ${timeFormatted}`;
-            document.getElementById('btn-live-stamp').textContent = `Registrar ahora (${getLocalHHMM(now)} hs)`;
+        // =====================================================================
+        // REGISTRO DE UN SOLO TOQUE ("TOMA PAPILLA")
+        // =====================================================================
+        function registerInstantFeeding() {
+            const date = getTodayISO();
+            const time = getCurrentTimeHHMM();
+            const noteInput = document.getElementById('quick-note-input');
+            const note = noteInput.value.trim();
 
-            // Buscar la toma más reciente
+            const newEntry = {
+                id: 'toma_' + Date.now(),
+                date,
+                time,
+                timestamp: parseTimestamp(date, time),
+                syringes: currentSyringes,
+                ml: Number((currentSyringes * 5).toFixed(1)),
+                notes: note
+            };
+
+            feedings.push(newEntry);
+            saveFeeds();
+
+            // Limpiar observación tras guardarla
+            noteInput.value = '';
+            draftNote = '';
+            saveSettings();
+
+            renderAll();
+            showToast(`¡Toma registrada a las ${time}!`, '🍼');
+        }
+
+        // =====================================================================
+        // RENDERIZADO DE ESTADO E HISTORIAL
+        // =====================================================================
+        function renderAll() {
+            updateStatusCard();
+            renderHistory();
+        }
+
+        function updateStatusCard() {
             const sorted = [...feedings].sort((a, b) => b.timestamp - a.timestamp);
-            const lastFeed = sorted[0];
+            const last = sorted[0] || null;
 
-            const heroEl = document.getElementById('elapsed-hero');
-            const exactEl = document.getElementById('last-feed-exact');
+            const elapsedEl = document.getElementById('live-elapsed-text');
+            const detailEl = document.getElementById('last-feed-detail');
             const pillEl = document.getElementById('status-pill');
-            const dotEl = document.getElementById('status-dot');
+            const emojiEl = document.getElementById('status-emoji');
             const labelEl = document.getElementById('status-label');
-            const cardEl = document.getElementById('hero-status-card');
 
-            if (!lastFeed) {
-                heroEl.textContent = 'Sin tomas';
-                exactEl.textContent = 'Presiona "TOMA PAPILLA" cuando llenes sus buches';
-                pillEl.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border bg-slate-800 text-slate-300 border-white/10';
-                dotEl.className = 'w-2 h-2 rounded-full bg-slate-400';
-                labelEl.textContent = 'Listo para empezar';
+            if (!last) {
+                elapsedEl.textContent = 'Sin tomas aún';
+                detailEl.textContent = 'Toca "TOMA PAPILLA" al terminar';
+                pillEl.className = 'px-3 py-2 rounded-2xl bg-[#E3F2E6] border-[1.5px] border-[#8C6239] text-center shrink-0';
+                emojiEl.textContent = '🐣';
+                labelEl.textContent = 'Listo';
                 return;
             }
 
-            const diffMs = now.getTime() - lastFeed.timestamp;
+            const diffMs = Date.now() - last.timestamp;
             const diffHours = diffMs / (1000 * 60 * 60);
 
-            heroEl.textContent = formatDuration(diffMs);
-            exactEl.textContent = `Dada ${formatFriendlyDate(lastFeed.date)} a las ${lastFeed.time} hs (${lastFeed.syringes} jer)`;
+            elapsedEl.textContent = formatDuration(diffMs);
+            detailEl.textContent = `${formatDisplayDate(last.date)} a las ${last.time} • ${formatSyringeLabel(last.syringes)}`;
 
-            // Código de color intuitivo según cuánto tiempo pasó
+            // Indicador visual pastel con borde marrón cálido según horas transcurridas
             if (diffHours < 2) {
-                pillEl.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border bg-emerald-400/15 text-emerald-300 border-emerald-400/30';
-                dotEl.className = 'w-2 h-2 rounded-full bg-emerald-400';
-                labelEl.textContent = 'Buches llenos • Tranquilos';
-                cardEl.style.borderColor = 'rgba(52, 211, 153, 0.25)';
+                pillEl.className = 'px-3 py-2 rounded-2xl bg-[#E3F2E6] border-[1.5px] border-[#8C6239] text-center shrink-0';
+                emojiEl.textContent = '😴';
+                labelEl.textContent = 'Llenitos';
             } else if (diffHours < 3.5) {
-                pillEl.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border bg-amber-400/15 text-amber-300 border-amber-400/30';
-                dotEl.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
-                labelEl.textContent = 'Revisar si vaciaron buches';
-                cardEl.style.borderColor = 'rgba(251, 191, 36, 0.35)';
+                pillEl.className = 'px-3 py-2 rounded-2xl bg-[#FEF3C7] border-[1.5px] border-[#8C6239] text-center shrink-0';
+                emojiEl.textContent = '👀';
+                labelEl.textContent = 'Revisar';
             } else {
-                pillEl.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border bg-rose-400/20 text-rose-300 border-rose-400/40';
-                dotEl.className = 'w-2 h-2 rounded-full bg-rose-400 animate-ping';
-                labelEl.textContent = '¡Hora de revisar / dar papilla!';
-                cardEl.style.borderColor = 'rgba(244, 114, 182, 0.45)';
+                pillEl.className = 'px-3 py-2 rounded-2xl bg-[#FAD2E1] border-[1.5px] border-[#8C6239] text-center shrink-0';
+                emojiEl.textContent = '🍼';
+                labelEl.textContent = '¡Comer!';
             }
         }
 
-        // =====================================================================
-        // RENDERIZADO DE ESTADÍSTICAS E HISTORIAL CON INTERVALOS
-        // =====================================================================
-        function renderAll() {
-            // Ordenar cronológicamente ascendente para calcular intervalos exactos entre toma y toma
-            const asc = [...feedings].sort((a, b) => a.timestamp - b.timestamp);
+        function renderHistory() {
+            const listEl = document.getElementById('history-list');
+            const countBadge = document.getElementById('feed-count-badge');
+            const avgText = document.getElementById('avg-interval-text');
+            const filterDate = document.getElementById('filter-date').value;
+            const clearBtn = document.getElementById('clear-date-btn');
 
-            const enriched = asc.map((item, idx) => {
-                const prev = idx > 0 ? asc[idx - 1] : null;
-                const intervalMs = prev ? (item.timestamp - prev.timestamp) : null;
-                return { ...item, intervalMs };
-            });
-
-            renderDailyStats(enriched);
-            renderHistory(enriched.reverse()); // Mostrar más recientes arriba
-        }
-
-        function renderDailyStats(enrichedAsc) {
-            const today = getLocalISODate(new Date());
-            const todayFeeds = enrichedAsc.filter(f => f.date === today);
-
-            document.getElementById('stat-today-count').textContent = todayFeeds.length;
-
-            // Total de jeringas y ml hoy
-            const totalSyr = todayFeeds.reduce((sum, f) => sum + Number(f.syringes || 0), 0);
-            const totalMl = Number((totalSyr * 5).toFixed(1));
-            document.getElementById('stat-today-syringes').textContent = totalSyr > 0
-                ? `${Number(totalSyr.toFixed(1))} jer (${totalMl}ml)`
-                : '0 jer';
-
-            // Frecuencia promedio (usando intervalos razonables menores a 12h para no distorsionar por descanso nocturno)
-            const validIntervals = todayFeeds
-                .map(f => f.intervalMs)
-                .filter(ms => ms !== null && ms > 0 && ms < 12 * 3600 * 1000);
-
-            if (validIntervals.length > 0) {
-                const avgMs = validIntervals.reduce((a, b) => a + b, 0) / validIntervals.length;
-                document.getElementById('stat-avg-interval').textContent = `c/ ${formatDuration(avgMs)}`;
-            } else if (enrichedAsc.length >= 2) {
-                // Si hoy solo hay 1 toma, mostrar el último intervalo registrado
-                const lastInt = enrichedAsc[enrichedAsc.length - 1].intervalMs;
-                document.getElementById('stat-avg-interval').textContent = lastInt ? `Últ: ${formatDuration(lastInt)}` : '--';
+            if (filterDate) {
+                clearBtn.classList.remove('hidden');
             } else {
-                document.getElementById('stat-avg-interval').textContent = '--';
+                clearBtn.classList.add('hidden');
             }
-        }
 
-        function renderHistory(descList) {
-            const container = document.getElementById('history-container');
+            // Ordenar cronológicamente para calcular el intervalo real con la toma anterior
+            const allSortedAsc = [...feedings].sort((a, b) => a.timestamp - b.timestamp);
+            const intervalMap = {};
+            let totalIntervalsMs = 0;
+            let intervalCount = 0;
 
-            if (descList.length === 0) {
-                container.innerHTML = `
-                    <div class="glass rounded-3xl p-8 text-center space-y-2">
+            for (let i = 0; i < allSortedAsc.length; i++) {
+                if (i === 0) {
+                    intervalMap[allSortedAsc[i].id] = 'Primera toma';
+                } else {
+                    const diff = allSortedAsc[i].timestamp - allSortedAsc[i - 1].timestamp;
+                    intervalMap[allSortedAsc[i].id] = `⏱️ ${formatDuration(diff)} después`;
+                    if (diff > 0 && diff < 1000 * 60 * 60 * 12) {
+                        totalIntervalsMs += diff;
+                        intervalCount++;
+                    }
+                }
+            }
+
+            if (intervalCount > 0) {
+                const avgMs = totalIntervalsMs / intervalCount;
+                avgText.textContent = `Promedio: comen cada ${formatDuration(avgMs)}`;
+            } else {
+                avgText.textContent = 'Calcula cada cuántas horas comen';
+            }
+
+            // Filtrar y ordenar de más reciente a más antigua para mostrar
+            let displayed = [...feedings].sort((a, b) => b.timestamp - a.timestamp);
+            if (filterDate) {
+                displayed = displayed.filter(f => f.date === filterDate);
+            }
+
+            countBadge.textContent = `${displayed.length} ${displayed.length === 1 ? 'toma' : 'tomas'}`;
+
+            if (displayed.length === 0) {
+                listEl.innerHTML = `
+                    <div class="sage-menu rounded-3xl p-7 text-center space-y-2">
                         <div class="text-3xl">🥣</div>
-                        <p class="text-sm font-semibold text-slate-200">Aún no hay tomas registradas</p>
-                        <p class="text-xs text-slate-400">Cuando termines de darles de comer a los 6, toca el botón verde de arriba.</p>
+                        <p class="text-sm font-extrabold text-[#4A3525]">No hay tomas registradas</p>
+                        <p class="text-xs font-semibold text-[#735743]">Presiona el botón rosa "TOMA PAPILLA" cuando termines de darles de comer.</p>
                     </div>
                 `;
                 return;
             }
 
-            // Agrupar por fecha
-            const groups = {};
-            descList.forEach(item => {
-                if (!groups[item.date]) groups[item.date] = [];
-                groups[item.date].push(item);
-            });
-
-            let html = '';
-            Object.keys(groups).forEach(dateKey => {
-                const items = groups[dateKey];
-                const dayTotalSyr = items.reduce((s, i) => s + Number(i.syringes || 0), 0);
-
-                html += `
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between px-1">
-                            <span class="text-xs font-extrabold text-slate-300">${formatFriendlyDate(dateKey)} <span class="font-normal text-slate-500">(${dateKey.split('-').reverse().join('/')})</span></span>
-                            <span class="text-[11px] font-medium text-slate-400">${items.length} ${items.length === 1 ? 'toma' : 'tomas'} • ${Number(dayTotalSyr.toFixed(1))} jer</span>
+            listEl.innerHTML = displayed.map(item => `
+                <div class="sage-menu rounded-2xl p-3.5 flex items-start justify-between gap-3 animate-fade-in">
+                    <div class="flex items-start gap-3 min-w-0">
+                        <!-- Cajita de Hora y Fecha con borde marrón cálido -->
+                        <div class="bg-[#FFFBEB] border-[1.5px] border-[#8C6239] rounded-2xl px-3 py-2 text-center shrink-0 min-w-[72px]">
+                            <div class="text-base font-black text-[#4A3525] leading-tight">${item.time}</div>
+                            <div class="text-[11px] font-extrabold text-[#735743]">${formatDisplayDate(item.date)}</div>
                         </div>
-                        <div class="space-y-2">
-                `;
 
-                items.forEach(feed => {
-                    const ml = Number((feed.syringes * 5).toFixed(1));
-                    let intervalBadge = '';
-
-                    if (feed.intervalMs !== null && feed.intervalMs >= 0) {
-                        intervalBadge = `
-                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-400/15 border border-amber-400/30 text-amber-200 text-[11px] font-bold">
-                                ⏱️ ${formatDuration(feed.intervalMs)} después
-                            </span>
-                        `;
-                    } else {
-                        intervalBadge = `
-                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-[11px] font-medium">
-                                🌱 Primera toma registrada
-                            </span>
-                        `;
-                    }
-
-                    html += `
-                        <div class="glass rounded-2xl p-3.5 flex items-start justify-between gap-3 animate-fade-in">
-                            <div class="flex items-start gap-3 min-w-0">
-                                <!-- Hora grande y clara -->
-                                <div class="bg-slate-900/90 border border-white/10 rounded-2xl px-3 py-2 text-center shrink-0">
-                                    <div class="text-base font-extrabold text-white leading-none">${feed.time}</div>
-                                    <div class="text-[10px] text-slate-400 mt-1">hs</div>
-                                </div>
-
-                                <!-- Intervalo + Jeringas + Nota -->
-                                <div class="min-w-0 space-y-1.5">
-                                    <div class="flex flex-wrap items-center gap-1.5">
-                                        ${intervalBadge}
-                                    </div>
-
-                                    <div class="flex items-center gap-2 text-xs text-slate-300 font-semibold">
-                                        <span class="text-sky-300">💉 ${feed.syringes} ${feed.syringes === 1 ? 'jeringa' : 'jeringas'}</span>
-                                        <span class="text-slate-500">(${ml} ml para los 6)</span>
-                                    </div>
-
-                                    ${feed.note ? `<p class="text-xs text-slate-300/90 italic break-words">"${escapeHTML(feed.note)}"</p>` : ''}
-                                </div>
+                        <!-- Información de intervalo y jeringas -->
+                        <div class="min-w-0 space-y-1">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="px-2.5 py-0.5 rounded-lg bg-[#FAD2E1] border border-[#8C6239] text-xs font-black text-[#4A3525]">
+                                    ${intervalMap[item.id] || ''}
+                                </span>
                             </div>
 
-                            <!-- Botones Editar / Borrar -->
-                            <div class="flex flex-col gap-1 shrink-0">
-                                <button onclick="openEditModal('${feed.id}')" aria-label="Editar toma" class="p-1.5 rounded-xl text-slate-400 hover:text-sky-300 hover:bg-white/5 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                </button>
-                                <button onclick="askDeleteFeed('${feed.id}')" aria-label="Borrar toma" class="p-1.5 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-rose-400/10 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                </button>
+                            <div class="text-xs font-extrabold text-[#4A3525] flex items-center gap-1.5">
+                                <span>💉 ${formatSyringeLabel(item.syringes)}</span>
+                                <span class="text-[#735743] font-bold">(${item.ml} ml)</span>
                             </div>
+
+                            ${item.notes ? `<p class="text-xs font-semibold text-[#735743] italic break-words">"${escapeHTML(item.notes)}"</p>` : ''}
                         </div>
-                    `;
-                });
+                    </div>
 
-                html += `</div></div>`;
-            });
+                    <!-- Botones de Editar y Eliminar con tonos marrón cálido -->
+                    <div class="flex flex-col gap-1 shrink-0">
+                        <button onclick="openEditModal('${item.id}')" aria-label="Editar toma" class="p-1.5 rounded-xl bg-[#FFFBEB] border border-[#A67B5B] text-[#735743] hover:text-[#4A3525] active:scale-90 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                        </button>
+                        <button onclick="confirmDelete('${item.id}')" aria-label="Eliminar toma" class="p-1.5 rounded-xl bg-[#FFFBEB] border border-[#A67B5B] text-[#735743] hover:text-[#8C6239] active:scale-90 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-            container.innerHTML = html;
+        function clearDateFilter() {
+            document.getElementById('filter-date').value = '';
+            renderHistory();
         }
 
         // =====================================================================
-        // EDICIÓN, INGRESO MANUAL Y BORRADO
+        // EDICIÓN Y ELIMINACIÓN
         // =====================================================================
-        function openManualModal() {
-            const now = new Date();
-            document.getElementById('modal-title').textContent = 'Agregar Toma Manual';
-            document.getElementById('edit-feed-id').value = '';
-            document.getElementById('edit-date').value = getLocalISODate(now);
-            document.getElementById('edit-time').value = getLocalHHMM(now);
-            document.getElementById('edit-syringes').value = currentSyringeCount;
-            document.getElementById('edit-note').value = '';
-            document.getElementById('edit-modal').classList.remove('hidden');
-        }
-
         function openEditModal(id) {
             const item = feedings.find(f => f.id === id);
             if (!item) return;
 
-            document.getElementById('modal-title').textContent = 'Editar Toma';
             document.getElementById('edit-feed-id').value = item.id;
             document.getElementById('edit-date').value = item.date;
             document.getElementById('edit-time').value = item.time;
             document.getElementById('edit-syringes').value = item.syringes;
-            document.getElementById('edit-note').value = item.note || '';
+            document.getElementById('edit-notes').value = item.notes || '';
+
             document.getElementById('edit-modal').classList.remove('hidden');
         }
 
-        function saveEditedFeed(event) {
+        function saveEditedFeeding(event) {
             event.preventDefault();
             const id = document.getElementById('edit-feed-id').value;
             const date = document.getElementById('edit-date').value;
             const time = document.getElementById('edit-time').value;
             const syringes = parseFloat(document.getElementById('edit-syringes').value);
-            const note = document.getElementById('edit-note').value.trim();
+            const notes = document.getElementById('edit-notes').value.trim();
 
-            if (!date || !time || isNaN(syringes)) return;
-
-            if (id) {
-                const index = feedings.findIndex(f => f.id === id);
-                if (index !== -1) {
-                    feedings[index] = {
-                        ...feedings[index],
-                        date,
-                        time,
-                        timestamp: parseTimestamp(date, time),
-                        syringes,
-                        note
-                    };
-                }
-                showToast('Toma actualizada', '✅');
-            } else {
-                feedings.push({
-                    id: 'toma_' + Date.now(),
+            const idx = feedings.findIndex(f => f.id === id);
+            if (idx !== -1) {
+                feedings[idx] = {
+                    ...feedings[idx],
                     date,
                     time,
                     timestamp: parseTimestamp(date, time),
                     syringes,
-                    note
-                });
-                showToast('Toma agregada', '🍼');
+                    ml: Number((syringes * 5).toFixed(1)),
+                    notes
+                };
+                saveFeeds();
+                renderAll();
+                closeModal('edit-modal');
+                showToast('Toma actualizada', '✏️');
             }
-
-            saveToStorage();
-            closeModal('edit-modal');
-            renderAll();
-            updateClockAndLiveStatus();
         }
 
-        function askDeleteFeed(id) {
+        function confirmDelete(id) {
             const btn = document.getElementById('confirm-delete-btn');
             btn.onclick = () => {
                 feedings = feedings.filter(f => f.id !== id);
-                saveToStorage();
-                closeModal('confirm-modal');
+                saveFeeds();
                 renderAll();
-                updateClockAndLiveStatus();
+                closeModal('confirm-modal');
                 showToast('Registro eliminado', '🗑️');
             };
             document.getElementById('confirm-modal').classList.remove('hidden');
         }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
         }
 
         // =====================================================================
-        // COPIAR RESUMEN DEL DÍA PARA WHATSAPP / NOTAS
+        // EXPORTAR Y COPIAR RESUMEN
         // =====================================================================
-        function copyDailySummary() {
-            const today = getLocalISODate(new Date());
-            const asc = [...feedings].sort((a, b) => a.timestamp - b.timestamp);
-            const enriched = asc.map((item, idx) => ({
-                ...item,
-                intervalMs: idx > 0 ? item.timestamp - asc[idx - 1].timestamp : null
-            }));
+        function openExportModal() {
+            const sortedAsc = [...feedings].sort((a, b) => a.timestamp - b.timestamp);
+            const intervalMap = {};
+            for (let i = 0; i < sortedAsc.length; i++) {
+                intervalMap[sortedAsc[i].id] = i === 0
+                    ? 'Inicio'
+                    : `cada ${formatDuration(sortedAsc[i].timestamp - sortedAsc[i - 1].timestamp)}`;
+            }
 
-            const todayList = enriched.filter(f => f.date === today);
-            const totalSyr = todayList.reduce((s, f) => s + Number(f.syringes || 0), 0);
-
+            const recent = [...feedings].sort((a, b) => b.timestamp - a.timestamp).slice(0, 20);
             let lines = [
-                `🪺 *NIDO DE PICHONES (6 en total)*`,
-                `🐣 2 chiquitos • 1 mediano • 3 grandecitos`,
-                `📅 Fecha: ${today.split('-').reverse().join('/')}`,
-                `📊 Tomas hoy: ${todayList.length} | Total: ${Number(totalSyr.toFixed(1))} jeringas (${Number((totalSyr * 5).toFixed(1))} ml)`,
-                `--------------------------------`
+                `🪺 CONTROL NIDITO (6 PICHONES)`,
+                `2 chiquitos • 1 mediano • 3 grandecitos`,
+                `Medida actual: ${formatSyringeDetail(currentSyringes)}`,
+                `------------------------------------`
             ];
 
-            if (todayList.length === 0) {
-                lines.push(`Aún sin tomas registradas hoy.`);
+            if (recent.length === 0) {
+                lines.push(`Sin tomas registradas aún.`);
             } else {
-                todayList.forEach(f => {
-                    const intTxt = f.intervalMs ? ` (a las ${formatDuration(f.intervalMs)})` : '';
-                    const noteTxt = f.note ? ` - "${f.note}"` : '';
-                    lines.push(`• ${f.time} hs${intTxt} → 💉 ${f.syringes} jer${noteTxt}`);
+                recent.forEach(f => {
+                    const note = f.notes ? ` — "${f.notes}"` : '';
+                    lines.push(`• [${formatDisplayDate(f.date)} ${f.time}] (${intervalMap[f.id]}) | ${formatSyringeLabel(f.syringes)} (${f.ml}ml)${note}`);
                 });
             }
 
-            const temp = document.createElement('textarea');
-            temp.value = lines.join('\n');
-            document.body.appendChild(temp);
-            temp.select();
+            document.getElementById('export-text').value = lines.join('\n');
+            document.getElementById('export-modal').classList.remove('hidden');
+        }
+
+        function copySummary() {
+            const textarea = document.getElementById('export-text');
+            textarea.select();
+            textarea.setSelectionRange(0, 99999);
             try {
                 document.execCommand('copy');
-                showToast('¡Resumen copiado para compartir!', '📋');
+                showToast('¡Resumen copiado!', '📋');
             } catch (e) {
                 showToast('No se pudo copiar', '⚠️');
             }
-            document.body.removeChild(temp);
+        }
+
+        function downloadJSON() {
+            const data = {
+                exportedAt: new Date().toISOString(),
+                currentSyringes,
+                feedings
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `nidito_pichones_${getTodayISO()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Respaldo descargado', '💾');
         }
 
         // =====================================================================
-        // TOAST Y ESCAPE HTML
+        // UTILIDADES UI
         // =====================================================================
         let toastTimer = null;
-        function showToast(text, icon = '✅') {
+        function showToast(msg, icon = '🍼') {
             const toast = document.getElementById('toast');
-            document.getElementById('toast-text').textContent = text;
+            document.getElementById('toast-msg').textContent = msg;
             document.getElementById('toast-icon').textContent = icon;
             toast.classList.remove('hidden');
 
             if (toastTimer) clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
                 toast.classList.add('hidden');
-            }, 2600);
+            }, 2400);
         }
 
         function escapeHTML(str) {
@@ -889,10 +926,11 @@
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
 
-        window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
