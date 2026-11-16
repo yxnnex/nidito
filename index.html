@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PatitosBebés - Nidito</title>
-    
-    <!-- Configuración de Icono para Pantalla de Inicio -->
+    <title>Nido PichónCare</title>
+
+    <!-- Icono para pantalla de inicio en celular -->
     <link rel="apple-touch-icon" href="./patitosbebe.png">
     <link rel="icon" type="image/png" href="./patitosbebe.png">
-    <meta name="theme-color" content="#FFFBEB">
-    
-    <!-- Manifest para Android / PWA -->
-    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Pich%C3%B3nCare%22%2C%22short_name%22%3A%22Pichones%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFBEB%22%2C%22theme_color%22%3A%22%23FFFBEB%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22./patitosbebe.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2png%22%7D%5D%7D">
+    <meta name="theme-color" content="#E3F2E6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="PichónCare">
+    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Nido%20Pich%C3%B3nCare%22%2C%22short_name%22%3A%22Pich%C3%B3nCare%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFBEB%22%2C%22theme_color%22%3A%22%23E3F2E6%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22./patitosbebe.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 
-    <!-- Fuente Nunito para estética cozy -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-pastel: #FFFBEB;
-            --card-green: #E3F2E6;
-            --border-brown: #8C6239;
-            --border-brown-light: #C49A76;
-            --text-brown: #4A3525;
-            --text-muted: #735743;
-            --btn-pink: #FAD2E1;
-            --btn-pink-hover: #F8BBD0;
-            --white: #FFFFFF;
+            --bg-cream: #FFFBEB;
+            --bg-cream-alt: #FEF7D7;
+            --sage-card: #E3F2E6;
+            --sage-soft: #D6EBDA;
+            --pink-btn: #FAD2E1;
+            --pink-btn-hover: #F7BED4;
+            --pink-soft: #FDE8F0;
+            --brown-dark: #4A3525;
+            --brown-mid: #735743;
+            --brown-line: #8C6239;
+            --brown-line-soft: #B8906D;
+            --white-cream: #FFFDF7;
         }
 
         * {
@@ -40,481 +40,849 @@
         }
 
         body {
-            background-color: var(--bg-pastel);
-            color: var(--text-brown);
-            padding: 16px;
+            background: linear-gradient(180deg, var(--bg-cream) 0%, var(--bg-cream-alt) 100%);
+            color: var(--brown-dark);
+            min-height: 100vh;
+            padding-bottom: 36px;
+        }
+
+        .container {
             max-width: 480px;
             margin: 0 auto;
-            min-height: 100vh;
+        }
+
+        /* Cabecera exacta estilo captura */
+        .top-bar {
+            background-color: var(--sage-card);
+            border: 1.5px solid var(--brown-line);
+            border-top: none;
+            border-bottom-left-radius: 26px;
+            border-bottom-right-radius: 26px;
+            padding: 16px 20px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 0 var(--brown-line);
+            margin-bottom: 18px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px dashed var(--border-brown-light);
+        .brand-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        header h1 {
-            font-size: 1.6rem;
+        .nest-icon-box {
+            width: 46px;
+            height: 46px;
+            background-color: var(--bg-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .brand-text h1 {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            line-height: 1.15;
+        }
+
+        .brand-text p {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--brown-mid);
+            margin-top: 2px;
+            text-transform: capitalize;
+        }
+
+        .btn-share {
+            width: 42px;
+            height: 42px;
+            background-color: var(--pink-btn);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 14px;
+            color: var(--brown-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s ease, background-color 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-share:active {
+            transform: scale(0.94);
+            background-color: var(--pink-btn-hover);
+        }
+
+        .main-content {
+            padding: 0 16px;
+        }
+
+        /* Tarjetas en verde pastel con líneas marrón */
+        .card {
+            background-color: var(--sage-card);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 3px 0 rgba(140, 98, 57, 0.25);
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1.5px dashed var(--brown-line-soft);
+        }
+
+        .card-title {
+            font-size: 1rem;
             font-weight: 800;
-            color: var(--text-brown);
+            color: var(--brown-dark);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        header p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        /* Tarjeta Principal del Nido */
-        .nest-card {
-            background-color: var(--card-green);
-            border: 2px solid var(--border-brown);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(140, 98, 57, 0.08);
-            margin-bottom: 20px;
-        }
-
-        .nest-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 6px;
         }
 
-        .chicks-badge-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .chick-tag {
-            background-color: var(--white);
-            border: 1.5px solid var(--border-brown-light);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-brown);
-        }
-
-        .timer-display {
-            background: var(--white);
-            border: 2px solid var(--border-brown);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 16px;
-        }
-
-        .timer-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .timer-value {
-            font-size: 1.8rem;
+        .total-badge {
+            background-color: var(--bg-cream);
+            border: 1.5px solid var(--brown-line);
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
             font-weight: 800;
-            color: var(--text-brown);
-            margin: 4px 0;
+            color: var(--brown-dark);
+        }
+
+        .chicks-pills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .chick-pill {
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 14px;
+            padding: 8px 6px;
+            text-align: center;
+        }
+
+        .chick-pill .emoji {
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .chick-pill .count {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            display: block;
+        }
+
+        .chick-pill .label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--brown-mid);
+        }
+
+        /* Temporizador en vivo */
+        .timer-box {
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 18px;
+            padding: 14px;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .timer-status-pill {
+            display: inline-block;
+            background-color: var(--sage-soft);
+            border: 1px solid var(--brown-line);
+            border-radius: 999px;
+            padding: 3px 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            margin-bottom: 6px;
+        }
+
+        .timer-status-pill.alert-soon {
+            background-color: #FDE68A;
+        }
+
+        .timer-status-pill.alert-now {
+            background-color: var(--pink-btn);
+        }
+
+        .timer-main {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            line-height: 1.2;
         }
 
         .timer-sub {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            font-weight: 600;
+            color: var(--brown-mid);
+            margin-top: 3px;
         }
 
-        /* Botón Gigante Toma Papilla */
-        .btn-feed {
-            background-color: var(--btn-pink);
-            border: 2px solid var(--border-brown);
-            color: var(--text-brown);
+        /* Botón principal Toma Papilla */
+        .btn-toma-papilla {
             width: 100%;
+            background-color: var(--pink-btn);
+            border: 2px solid var(--brown-line);
+            border-radius: 18px;
             padding: 16px;
-            border-radius: 16px;
-            font-size: 1.2rem;
-            font-weight: 800;
+            color: var(--brown-dark);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 0.4px;
             cursor: pointer;
-            box-shadow: 0 4px 0 var(--border-brown);
-            transition: all 0.1s ease;
+            box-shadow: 0 4px 0 var(--brown-line);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 16px;
+            transition: transform 0.08s ease, box-shadow 0.08s ease;
         }
 
-        .btn-feed:active {
+        .btn-toma-papilla:active {
             transform: translateY(3px);
-            box-shadow: 0 1px 0 var(--border-brown);
+            box-shadow: 0 1px 0 var(--brown-line);
+            background-color: var(--pink-btn-hover);
         }
 
-        /* Control de Jeringas */
-        .syringe-box {
-            background: var(--white);
-            border: 2px solid var(--border-brown-light);
-            border-radius: 14px;
-            padding: 12px;
-            margin-top: 12px;
-            text-align: left;
-        }
-
-        .syringe-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 8px;
+        /* Control de Jeringas de 5ml */
+        .syringe-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
 
-        .syringe-controls {
+        .syringe-ml-badge {
+            background-color: var(--pink-soft);
+            border: 1.5px solid var(--brown-line);
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+        }
+
+        .syringe-stepper {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 16px;
+            padding: 8px;
+            margin-bottom: 10px;
         }
 
-        .syringe-btn {
-            background: var(--card-green);
-            border: 1.5px solid var(--border-brown);
-            color: var(--text-brown);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 1.1rem;
+        .btn-step {
+            width: 42px;
+            height: 42px;
+            background-color: var(--pink-btn);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--brown-dark);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .syringe-input {
-            flex: 1;
-            text-align: center;
-            font-weight: 800;
-            font-size: 1rem;
-            border: 1.5px solid var(--border-brown-light);
-            border-radius: 10px;
-            padding: 6px;
-            background: var(--bg-pastel);
-            color: var(--text-brown);
+        .btn-step:active {
+            background-color: var(--pink-btn-hover);
+            transform: scale(0.95);
         }
 
-        .syringe-quick-btns {
+        .syringe-display {
+            text-align: center;
+        }
+
+        .syringe-display .val {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            display: block;
+        }
+
+        .syringe-display .desc {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--brown-mid);
+        }
+
+        .quick-chips {
             display: flex;
             gap: 6px;
-            margin-top: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
         }
 
-        .quick-btn {
-            background: var(--bg-pastel);
-            border: 1px solid var(--border-brown-light);
-            border-radius: 8px;
-            padding: 4px 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .quick-btn.active {
-            background: var(--btn-pink);
-            border-color: var(--border-brown);
-            color: var(--text-brown);
-        }
-
-        /* Sección Historial */
-        .history-section {
-            background: var(--card-green);
-            border: 2px solid var(--border-brown);
-            border-radius: 20px;
-            padding: 16px;
+        .chip {
             flex: 1;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 6px 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--brown-dark);
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
-        .history-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .chip.active {
+            background-color: var(--pink-btn);
+        }
+
+        .obs-input {
+            width: 100%;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+            outline: none;
+        }
+
+        .obs-input::placeholder {
+            color: #9C826E;
+        }
+
+        /* Historial de tomas */
+        .history-stats {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stat-mini {
+            flex: 1;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 12px;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        .stat-mini .num {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+            display: block;
+        }
+
+        .stat-mini .lbl {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--brown-mid);
         }
 
         .history-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 4px;
         }
 
         .history-item {
-            background: var(--white);
-            border: 1.5px solid var(--border-brown-light);
-            border-radius: 12px;
-            padding: 12px;
+            background-color: var(--white-cream);
+            border: 1.5px solid var(--brown-line);
+            border-radius: 16px;
+            padding: 12px 14px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 10px;
         }
 
-        .history-info .date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
+        .item-left {
+            flex: 1;
         }
 
-        .history-info .detail {
-            font-size: 0.95rem;
+        .item-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .item-time {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--brown-dark);
+        }
+
+        .item-date {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--brown-mid);
+        }
+
+        .interval-badge {
+            background-color: var(--sage-card);
+            border: 1px solid var(--brown-line);
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 0.72rem;
             font-weight: 800;
-            color: var(--text-brown);
-            margin-top: 2px;
+            color: var(--brown-dark);
         }
 
-        .btn-delete {
-            background: none;
-            border: none;
-            color: #C0392B;
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 8px;
+        .item-bottom {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--brown-mid);
         }
 
-        .btn-delete:hover {
-            background: #FDEDEC;
+        .item-note {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+            background-color: var(--bg-cream);
+            border-left: 3px solid var(--brown-line);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 5px;
         }
 
-        .empty-history {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            padding: 24px;
-            font-style: italic;
-        }
-
-        /* Notas adicionales */
-        .notes-input {
-            width: 100%;
-            border: 1.5px solid var(--border-brown-light);
+        .btn-del {
+            width: 34px;
+            height: 34px;
+            background-color: var(--pink-soft);
+            border: 1.5px solid var(--brown-line);
             border-radius: 10px;
-            padding: 8px;
+            color: var(--brown-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 22px 12px;
+            color: var(--brown-mid);
+            font-size: 0.88rem;
+            font-weight: 600;
+            background-color: var(--white-cream);
+            border: 1.5px dashed var(--brown-line);
+            border-radius: 16px;
+        }
+
+        /* Toast de confirmación */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background-color: var(--brown-dark);
+            color: var(--bg-cream);
+            padding: 10px 18px;
+            border-radius: 999px;
             font-size: 0.85rem;
-            background: var(--white);
-            color: var(--text-brown);
-            margin-top: 8px;
-            resize: none;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(74, 53, 37, 0.3);
+            transition: transform 0.25s ease;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1><i data-feather="heart" style="color: var(--btn-pink);"></i> PatitosBebé</h1>
-        <p>Seguimiento grupal del nido</p>
+<div class="container">
+    <!-- Barra superior idéntica a la imagen -->
+    <header class="top-bar">
+        <div class="brand-left">
+            <div class="nest-icon-box">🪺</div>
+            <div class="brand-text">
+                <h1>Nido PichónCare</h1>
+                <p id="currentDateDisplay">Cargando fecha...</p>
+            </div>
+        </div>
+        <button class="btn-share" onclick="copySummary()" title="Copiar resumen">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+        </button>
     </header>
 
-    <!-- Tarjeta Principal del Nido -->
-    <div class="nest-card">
-        <div class="nest-title">
-            <i data-feather="home"></i> Nido Grupal (6 Pichones)
-        </div>
-        
-        <div class="chicks-badge-container">
-            <span class="chick-tag">🐥 2 Chiquitos</span>
-            <span class="chick-tag">🐤 1 Mediano</span>
-            <span class="chick-tag">🐦 3 Grandecitos</span>
-        </div>
-
-        <div class="timer-display">
-            <div class="timer-label">Tiempo desde última toma</div>
-            <div class="timer-value" id="elapsedTime">--:--</div>
-            <div class="timer-sub" id="lastFeedTimeText">Sin registros aún</div>
-        </div>
-
-        <!-- Control de Jeringas -->
-        <div class="syringe-box">
-            <div class="syringe-label">
-                <span><i data-feather="droplet" style="width: 14px; height: 14px;"></i> Cantidad de jeringa (5ml)</span>
-                <span id="totalMlText" style="font-size: 0.75rem; color: var(--text-muted);">7.5 ml total</span>
+    <main class="main-content">
+        <!-- Tarjeta del Nido Grupal -->
+        <section class="card">
+            <div class="card-header-row">
+                <span class="card-title">🐣 Nido Grupal</span>
+                <span class="total-badge">6 pichones juntos</span>
             </div>
-            <div class="syringe-controls">
-                <button class="syringe-btn" onclick="adjustSyringe(-0.5)">-</button>
-                <input type="number" id="syringeInput" class="syringe-input" value="1.5" step="0.25" min="0.25" max="10" onchange="updateSyringeText()">
-                <button class="syringe-btn" onclick="adjustSyringe(0.5)">+</button>
+
+            <div class="chicks-pills">
+                <div class="chick-pill">
+                    <span class="emoji">🐥</span>
+                    <span class="count">2 Chiquitos</span>
+                    <span class="label">Más peques</span>
+                </div>
+                <div class="chick-pill">
+                    <span class="emoji">🐤</span>
+                    <span class="count">1 Mediano</span>
+                    <span class="label">Intermedio</span>
+                </div>
+                <div class="chick-pill">
+                    <span class="emoji">🐦</span>
+                    <span class="count">3 Grandecitos</span>
+                    <span class="label">Más grandes</span>
+                </div>
             </div>
-            <div class="syringe-quick-btns">
-                <button class="quick-btn" onclick="setSyringe(1)">1 jeringa</button>
-                <button class="quick-btn active" onclick="setSyringe(1.5)">1.5 (Predef.)</button>
-                <button class="quick-btn" onclick="setSyringe(2)">2 jeringas</button>
-                <button class="quick-btn" onclick="setSyringe(2.5)">2.5</button>
-                <button class="quick-btn" onclick="setSyringe(3)">3 jeringas</button>
+
+            <div class="timer-box">
+                <span class="timer-status-pill" id="statusPill">Esperando primera toma</span>
+                <div class="timer-main" id="elapsedDisplay">Sin tomas hoy</div>
+                <div class="timer-sub" id="lastFeedExact">Presioná el botón cuando les des papilla</div>
             </div>
-            <textarea id="feedNotes" class="notes-input" placeholder="Observación opcional (ej: buche bien vacío, se devoraron todo)..." rows="2"></textarea>
-        </div>
 
-        <button class="btn-feed" onclick="recordFeeding()" style="margin-top: 16px;">
-            <i data-feather="check-circle"></i> TOMA PAPILLA
-        </button>
-    </div>
+            <button class="btn-toma-papilla" onclick="registerFeed()">
+                <span>🍼</span>
+                <span>TOMA PAPILLA</span>
+            </button>
+        </section>
 
-    <!-- Historial -->
-    <div class="history-section">
-        <div class="history-title">
-            <span><i data-feather="clock"></i> Historial de Tomas</span>
-            <span id="historyCount" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">0 tomas</span>
-        </div>
-        <div class="history-list" id="historyList">
-            <div class="empty-history">No hay tomas registradas hoy. ¡Toca el botón cuando les des de comer!</div>
-        </div>
-    </div>
+        <!-- Control de Jeringas de 5 ml -->
+        <section class="card">
+            <div class="syringe-header">
+                <span class="card-title">💉 Medida de Jeringa (5 ml)</span>
+                <span class="syringe-ml-badge" id="mlBadge">7.5 ml totales</span>
+            </div>
 
-    <script>
-        feather.replace();
+            <div class="syringe-stepper">
+                <button class="btn-step" onclick="changeSyringe(-0.25)">−</button>
+                <div class="syringe-display">
+                    <span class="val" id="syringeText">1 ½ jeringas</span>
+                    <span class="desc" id="syringeDesc">1 entera de 5ml + media</span>
+                </div>
+                <button class="btn-step" onclick="changeSyringe(0.25)">+</button>
+            </div>
 
-        let feedingHistory = JSON.parse(localStorage.getItem('pichoncare_history') || '[]');
+            <div class="quick-chips" id="quickChips">
+                <div class="chip" onclick="selectSyringe(1)">1</div>
+                <div class="chip active" onclick="selectSyringe(1.5)">1 ½</div>
+                <div class="chip" onclick="selectSyringe(2)">2</div>
+                <div class="chip" onclick="selectSyringe(2.5)">2 ½</div>
+                <div class="chip" onclick="selectSyringe(3)">3</div>
+            </div>
 
-        function initApp() {
-            renderHistory();
-            updateTimer();
-            setInterval(updateTimer, 1000);
-            updateSyringeText();
+            <input type="text" id="obsInput" class="obs-input" placeholder="Observación (ej: buches llenitos, pidieron más)...">
+        </section>
+
+        <!-- Historial y Frecuencia -->
+        <section class="card">
+            <div class="card-header-row">
+                <span class="card-title">📋 Registro de Tomas</span>
+                <span class="total-badge" id="todayCountBadge">0 hoy</span>
+            </div>
+
+            <div class="history-stats">
+                <div class="stat-mini">
+                    <span class="num" id="avgIntervalDisplay">—</span>
+                    <span class="lbl">Promedio entre tomas</span>
+                </div>
+                <div class="stat-mini">
+                    <span class="num" id="todayMlDisplay">0 ml</span>
+                    <span class="lbl">Papilla dada hoy</span>
+                </div>
+            </div>
+
+            <div class="history-list" id="historyList">
+                <div class="empty-state">Todavía no hay tomas registradas.<br>Tocá <strong>TOMA PAPILLA</strong> para guardar la hora automáticamente.</div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const STORAGE_KEY = 'nido_pichoncare_v2';
+    const SYRINGE_KEY = 'nido_pichoncare_syringe';
+
+    let feeds = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    let currentSyringes = parseFloat(localStorage.getItem(SYRINGE_KEY) || '1.5');
+
+    function updateHeaderDate() {
+        const now = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'long' };
+        let formatted = now.toLocaleDateString('es-AR', options);
+        formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        document.getElementById('currentDateDisplay').textContent = formatted;
+    }
+
+    function formatSyringeFraction(val) {
+        const whole = Math.floor(val);
+        const rem = Math.round((val - whole) * 100);
+        let frac = '';
+        if (rem === 25) frac = '¼';
+        else if (rem === 50) frac = '½';
+        else if (rem === 75) frac = '¾';
+        else if (rem > 0) frac = '.' + rem;
+
+        if (whole === 0 && frac) return frac;
+        return frac ? `${whole} ${frac}` : `${whole}`;
+    }
+
+    function updateSyringeUI() {
+        const label = formatSyringeFraction(currentSyringes);
+        const plural = currentSyringes === 1 ? 'jeringa' : 'jeringas';
+        const ml = (currentSyringes * 5).toFixed(1).replace('.0', '');
+
+        document.getElementById('syringeText').textContent = `${label} ${plural}`;
+        document.getElementById('mlBadge').textContent = `${ml} ml totales`;
+
+        if (currentSyringes === 1.5) {
+            document.getElementById('syringeDesc').textContent = '1 entera de 5ml + media';
+        } else if (currentSyringes === 1) {
+            document.getElementById('syringeDesc').textContent = '1 jeringa completa de 5ml';
+        } else {
+            document.getElementById('syringeDesc').textContent = `Equivale a ${ml} ml para los 6`;
         }
 
-        function setSyringe(val) {
-            document.getElementById('syringeInput').value = val;
-            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            updateSyringeText();
+        document.querySelectorAll('#quickChips .chip').forEach(chip => {
+            const chipVal = parseFloat(chip.getAttribute('onclick').match(/[\d.]+/)[0]);
+            chip.classList.toggle('active', chipVal === currentSyringes);
+        });
+
+        localStorage.setItem(SYRINGE_KEY, currentSyringes.toString());
+    }
+
+    function changeSyringe(delta) {
+        currentSyringes = Math.max(0.25, Math.round((currentSyringes + delta) * 100) / 100);
+        updateSyringeUI();
+    }
+
+    function selectSyringe(val) {
+        currentSyringes = val;
+        updateSyringeUI();
+    }
+
+    function registerFeed() {
+        const now = new Date();
+        const obs = document.getElementById('obsInput').value.trim();
+
+        const record = {
+            id: Date.now(),
+            timestamp: now.toISOString(),
+            syringes: currentSyringes,
+            ml: currentSyringes * 5,
+            note: obs
+        };
+
+        feeds.unshift(record);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(feeds));
+
+        document.getElementById('obsInput').value = '';
+        renderAll();
+        showToast('🍼 ¡Toma registrada con éxito!');
+    }
+
+    function deleteFeed(id) {
+        feeds = feeds.filter(f => f.id !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(feeds));
+        renderAll();
+        showToast('Registro eliminado');
+    }
+
+    function formatDuration(ms) {
+        const totalMins = Math.floor(ms / 60000);
+        const hrs = Math.floor(totalMins / 60);
+        const mins = totalMins % 60;
+        if (hrs === 0) return `${mins}m`;
+        return `${hrs}h ${mins}m`;
+    }
+
+    function updateLiveTimer() {
+        const pill = document.getElementById('statusPill');
+        const main = document.getElementById('elapsedDisplay');
+        const sub = document.getElementById('lastFeedExact');
+
+        if (feeds.length === 0) {
+            pill.textContent = 'Sin tomas registradas';
+            pill.className = 'timer-status-pill';
+            main.textContent = '— : —';
+            sub.textContent = 'Tocá TOMA PAPILLA al terminar de darles';
+            return;
         }
 
-        function adjustSyringe(amount) {
-            let input = document.getElementById('syringeInput');
-            let val = parseFloat(input.value) || 0;
-            val = Math.max(0.25, val + amount);
-            input.value = val;
-            updateSyringeText();
+        const lastDate = new Date(feeds[0].timestamp);
+        const diffMs = Date.now() - lastDate.getTime();
+        const diffHours = diffMs / 3600000;
+
+        main.textContent = `Hace ${formatDuration(diffMs)}`;
+
+        const timeStr = lastDate.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+        const dayStr = lastDate.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+        sub.textContent = `Última toma: ${dayStr} a las ${timeStr} (${formatSyringeFraction(feeds[0].syringes)} jer.)`;
+
+        if (diffHours >= 3) {
+            pill.textContent = '🔔 Revisar buches (ya pasaron +3h)';
+            pill.className = 'timer-status-pill alert-now';
+        } else if (diffHours >= 2) {
+            pill.textContent = '⏳ Se acerca la próxima toma';
+            pill.className = 'timer-status-pill alert-soon';
+        } else {
+            pill.textContent = '💚 Buches llenitos / Digestión';
+            pill.className = 'timer-status-pill';
         }
+    }
 
-        function updateSyringeText() {
-            let val = parseFloat(document.getElementById('syringeInput').value) || 0;
-            let totalMl = val * 5;
-            document.getElementById('totalMlText').innerText = `${totalMl} ml total (${val} jeringa${val === 1 ? '' : 's'})`;
-        }
+    function renderAll() {
+        updateLiveTimer();
 
-        function recordFeeding() {
-            const syringes = parseFloat(document.getElementById('syringeInput').value) || 1.5;
-            const notes = document.getElementById('feedNotes').value.trim();
-            const now = new Date();
+        const todayStr = new Date().toDateString();
+        const todayFeeds = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
 
-            const newRecord = {
-                id: Date.now(),
-                timestamp: now.toISOString(),
-                syringes: syringes,
-                totalMl: syringes * 5,
-                notes: notes
-            };
+        document.getElementById('todayCountBadge').textContent = `${todayFeeds.length} hoy`;
+        const totalMlToday = todayFeeds.reduce((acc, f) => acc + f.ml, 0);
+        document.getElementById('todayMlDisplay').textContent = `${totalMlToday.toFixed(1).replace('.0', '')} ml`;
 
-            feedingHistory.unshift(newRecord);
-            localStorage.setItem('pichoncare_history', JSON.stringify(feedingHistory));
-
-            // Limpiar nota
-            document.getElementById('feedNotes').value = '';
-
-            confetti({
-                particleCount: 50,
-                spread: 60,
-                origin: { y: 0.8 },
-                colors: ['#FAD2E1', '#E3F2E6', '#8C6239']
-            });
-
-            renderHistory();
-            updateTimer();
-        }
-
-        function deleteRecord(id) {
-            if (confirm('¿Eliminar este registro?')) {
-                feedingHistory = feedingHistory.filter(item => item.id !== id);
-                localStorage.setItem('pichoncare_history', JSON.stringify(feedingHistory));
-                renderHistory();
-                updateTimer();
+        // Calcular promedio de intervalo entre tomas
+        if (feeds.length >= 2) {
+            let totalDiff = 0;
+            let count = 0;
+            for (let i = 0; i < Math.min(feeds.length - 1, 10); i++) {
+                const d1 = new Date(feeds[i].timestamp).getTime();
+                const d2 = new Date(feeds[i + 1].timestamp).getTime();
+                const diff = d1 - d2;
+                if (diff > 0 && diff < 12 * 3600000) {
+                    totalDiff += diff;
+                    count++;
+                }
             }
+            document.getElementById('avgIntervalDisplay').textContent = count > 0 ? `Cada ${formatDuration(totalDiff / count)}` : '—';
+        } else {
+            document.getElementById('avgIntervalDisplay').textContent = '—';
         }
 
-        function renderHistory() {
-            const listEl = document.getElementById('historyList');
-            const countEl = document.getElementById('historyCount');
-            
-            countEl.innerText = `${feedingHistory.length} toma${feedingHistory.length === 1 ? '' : 's'}`;
+        const list = document.getElementById('historyList');
+        if (feeds.length === 0) {
+            list.innerHTML = `<div class="empty-state">Todavía no hay tomas registradas.<br>Tocá <strong>TOMA PAPILLA</strong> para guardar la hora automáticamente.</div>`;
+            return;
+        }
 
-            if (feedingHistory.length === 0) {
-                listEl.innerHTML = `<div class="empty-history">No hay tomas registradas aún. ¡Toca el botón cuando les des de comer!</div>`;
-                return;
+        list.innerHTML = feeds.map((item, idx) => {
+            const d = new Date(item.timestamp);
+            const timeStr = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+            const dateStr = d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+
+            let intervalHtml = '';
+            if (idx < feeds.length - 1) {
+                const prevD = new Date(feeds[idx + 1].timestamp);
+                const diff = d.getTime() - prevD.getTime();
+                if (diff > 0) {
+                    intervalHtml = `<span class="interval-badge">⏱️ ${formatDuration(diff)} después</span>`;
+                }
+            } else {
+                intervalHtml = `<span class="interval-badge">🌱 Inicio</span>`;
             }
 
-            listEl.innerHTML = feedingHistory.map(item => {
-                const date = new Date(item.timestamp);
-                const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                const dateStr = date.toLocaleDateString([], { day: '2-digit', month: '2-digit' });
+            const syrLabel = formatSyringeFraction(item.syringes);
+            const mlLabel = item.ml.toFixed(1).replace('.0', '');
 
-                return `
-                    <div class="history-item">
-                        <div class="history-info">
-                            <div class="date">${dateStr} - ⏰ ${timeStr}</div>
-                            <div class="detail">💉 ${item.syringes} jeringa${item.syringes === 1 ? '' : 's'} (${item.totalMl} ml)</div>
-                            ${item.notes ? `<div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">💬 ${item.notes}</div>` : ''}
+            return `
+                <div class="history-item">
+                    <div class="item-left">
+                        <div class="item-top">
+                            <span class="item-time">${timeStr}</span>
+                            <span class="item-date">(${dateStr})</span>
+                            ${intervalHtml}
                         </div>
-                        <button class="btn-delete" onclick="deleteRecord(${item.id})">
-                            <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
-                        </button>
+                        <div class="item-bottom">
+                            💉 ${syrLabel} ${item.syringes === 1 ? 'jeringa' : 'jeringas'} (${mlLabel} ml)
+                        </div>
+                        ${item.note ? `<div class="item-note">${escapeHtml(item.note)}</div>` : ''}
                     </div>
-                `;
-            }).join('');
+                    <button class="btn-del" onclick="deleteFeed(${item.id})" title="Eliminar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }).join('');
+    }
 
-            feather.replace();
+    function copySummary() {
+        if (feeds.length === 0) {
+            showToast('No hay tomas para compartir aún');
+            return;
         }
+        const todayStr = new Date().toDateString();
+        const todayFeeds = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
+        const listToShare = todayFeeds.length > 0 ? todayFeeds : feeds.slice(0, 5);
 
-        function updateTimer() {
-            const timerValEl = document.getElementById('elapsedTime');
-            const lastTextEl = document.getElementById('lastFeedTimeText');
+        let text = `🪺 *Nido PichónCare (6 pichones)*\n`;
+        listToShare.slice().reverse().forEach(f => {
+            const d = new Date(f.timestamp);
+            const t = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+            text += `• ${t} — ${formatSyringeFraction(f.syringes)} jer. (${f.ml}ml)${f.note ? ` [${f.note}]` : ''}\n`;
+        });
 
-            if (feedingHistory.length === 0) {
-                timerValEl.innerText = "--:--";
-                lastTextEl.innerText = "Sin registros aún";
-                return;
-            }
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('📋 Resumen copiado al portapapeles');
+        }).catch(() => {
+            showToast('No se pudo copiar');
+        });
+    }
 
-            const lastTime = new Date(feedingHistory[0].timestamp).getTime();
-            const now = new Date().getTime();
-            const diffMs = now - lastTime;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2400);
+    }
 
-            const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
-            const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-            const diffSecs = Math.floor((diffMs % (1000 * 60)) / 1000);
+    function escapeHtml(str) {
+        return str.replace(/[&<>"']/g, m => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[m]));
+    }
 
-            timerValEl.innerText = `${String(diffHrs).padStart(2, '0')}:${String(diffMins).padStart(2, '0')}:${String(diffSecs).padStart(2, '0')}`;
-            lastTextEl.innerText = `Última toma hace ${diffHrs}h ${diffMins}m`;
-        }
-
-        initApp();
-    </script>
+    updateHeaderDate();
+    updateSyringeUI();
+    renderAll();
+    setInterval(updateLiveTimer, 30000);
+</script>
 </body>
 </html>
