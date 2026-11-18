@@ -722,6 +722,13 @@
         .drop{position:absolute;border-radius:50%;background:rgba(255,255,255,.7);transform:scale(0);animation:drop .65s ease-out forwards;pointer-events:none}
         @keyframes drop{to{transform:scale(1);opacity:0}}
         @media (prefers-reduced-motion:reduce){.blob{animation:none}.drop{display:none}}
+
+        /* ===== Medida en ml ===== */
+        .ml-field{display:flex;align-items:baseline;justify-content:center;gap:4px}
+        .ml-field input{width:92px;text-align:center;background:transparent;border:none;border-bottom:2px dashed var(--brown-line-soft);font-size:1.5rem;font-weight:900;color:var(--brown-dark);outline:none;border-radius:0;box-shadow:none;-moz-appearance:textfield}
+        .ml-field input::-webkit-outer-spin-button,.ml-field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+        .ml-field input:focus{border-bottom-color:var(--brown-line)}
+        .ml-field b{font-weight:800;color:var(--brown-mid)}
     </style>
 </head>
 <body>
@@ -786,28 +793,28 @@
             </button>
         </section>
 
-        <!-- Control de Jeringas de 5 ml -->
+        <!-- Cantidad de papilla en ml -->
         <section class="card">
             <div class="syringe-header">
-                <span class="card-title">💉 Medida de Jeringa (5 ml)</span>
-                <span class="syringe-ml-badge" id="mlBadge">7.5 ml totales</span>
+                <span class="card-title">💉 Medida por toma</span>
+                <span class="syringe-ml-badge" id="mlBadge">7.5 ml</span>
             </div>
 
             <div class="syringe-stepper">
-                <button class="btn-step" onclick="changeSyringe(-0.25)">−</button>
+                <button class="btn-step" onclick="changeMl(-0.5)">−</button>
                 <div class="syringe-display">
-                    <span class="val" id="syringeText">1 ½ jeringas</span>
-                    <span class="desc" id="syringeDesc">1 entera de 5ml + media</span>
+                    <span class="ml-field"><input type="number" id="mlInput" inputmode="decimal" step="0.5" min="0.5" value="7.5" oninput="onMlTyped()" onchange="updateMlUI()"><b>ml</b></span>
+                    <span class="desc">Tocá el número para escribir otra medida</span>
                 </div>
-                <button class="btn-step" onclick="changeSyringe(0.25)">+</button>
+                <button class="btn-step" onclick="changeMl(0.5)">+</button>
             </div>
 
             <div class="quick-chips" id="quickChips">
-                <div class="chip" onclick="selectSyringe(1)">1</div>
-                <div class="chip active" onclick="selectSyringe(1.5)">1 ½</div>
-                <div class="chip" onclick="selectSyringe(2)">2</div>
-                <div class="chip" onclick="selectSyringe(2.5)">2 ½</div>
-                <div class="chip" onclick="selectSyringe(3)">3</div>
+                <div class="chip" data-ml="5" onclick="selectMl(5)">5</div>
+                <div class="chip" data-ml="7.5" onclick="selectMl(7.5)">7.5</div>
+                <div class="chip" data-ml="10" onclick="selectMl(10)">10</div>
+                <div class="chip" data-ml="15" onclick="selectMl(15)">15</div>
+                <div class="chip" data-ml="20" onclick="selectMl(20)">20</div>
             </div>
 
             <div class="obs-row">
@@ -867,8 +874,8 @@
             <input type="time" id="manualTime" class="form-control">
         </div>
         <div class="form-group">
-            <label>Cantidad de jeringas (5 ml c/u)</label>
-            <input type="number" id="manualSyringe" class="form-control" step="0.25" min="0.25" value="1.5">
+            <label>Cantidad (ml)</label>
+            <input type="number" id="manualSyringe" class="form-control" step="0.5" min="0.5" value="7.5">
         </div>
         <div class="form-group">
             <label>Observación (opcional)</label>
@@ -960,7 +967,13 @@
     }
 
     let feeds = loadLocalFeeds();
-    let currentSyringes = parseFloat(localStorage.getItem(SYRINGE_KEY) || '1.5');
+    const ML_KEY = 'nido_pichoncare_ml';
+    let currentMl = (() => {
+        const m = parseFloat(localStorage.getItem(ML_KEY));
+        if (m > 0) return m;
+        const old = parseFloat(localStorage.getItem(SYRINGE_KEY)); // migra la medida vieja (jeringas de 5 ml)
+        return old > 0 ? old * 5 : 7.5;
+    })();
 
     // Escuchar datos desde Firebase Realtime Database
     const tomasRef = rtdb.ref('nido_tomas');
@@ -1054,38 +1067,31 @@
         return frac ? `${whole} ${frac}` : `${whole}`;
     }
 
-    function updateSyringeUI() {
-        const label = formatSyringeFraction(currentSyringes);
-        const plural = currentSyringes === 1 ? 'jeringa' : 'jeringas';
-        const ml = (currentSyringes * 5).toFixed(1).replace('.0', '');
+    function fmtMl(v) { return String(Math.round((Number(v) || 0) * 10) / 10); }
+    function getMl(f) { return Number(f.ml) || (Number(f.syringes) || 0) * 5; }
 
-        document.getElementById('syringeText').textContent = `${label} ${plural}`;
-        document.getElementById('mlBadge').textContent = `${ml} ml totales`;
-
-        if (currentSyringes === 1.5) {
-            document.getElementById('syringeDesc').textContent = '1 entera de 5ml + media';
-        } else if (currentSyringes === 1) {
-            document.getElementById('syringeDesc').textContent = '1 jeringa completa de 5ml';
-        } else {
-            document.getElementById('syringeDesc').textContent = `Equivale a ${ml} ml para los 6`;
-        }
-
+    function updateMlUI(fromTyping) {
+        if (!fromTyping) document.getElementById('mlInput').value = fmtMl(currentMl);
+        document.getElementById('mlBadge').textContent = `${fmtMl(currentMl)} ml`;
         document.querySelectorAll('#quickChips .chip').forEach(chip => {
-            const chipVal = parseFloat(chip.getAttribute('onclick').match(/[\d.]+/)[0]);
-            chip.classList.toggle('active', chipVal === currentSyringes);
+            chip.classList.toggle('active', parseFloat(chip.dataset.ml) === currentMl);
         });
-
-        localStorage.setItem(SYRINGE_KEY, currentSyringes.toString());
+        localStorage.setItem(ML_KEY, String(currentMl));
     }
 
-    function changeSyringe(delta) {
-        currentSyringes = Math.max(0.25, Math.round((currentSyringes + delta) * 100) / 100);
-        updateSyringeUI();
+    function onMlTyped() {
+        const v = parseFloat(document.getElementById('mlInput').value);
+        if (v > 0) { currentMl = v; updateMlUI(true); }
     }
 
-    function selectSyringe(val) {
-        currentSyringes = val;
-        updateSyringeUI();
+    function changeMl(delta) {
+        currentMl = Math.max(0.5, Math.round((currentMl + delta) * 10) / 10);
+        updateMlUI();
+    }
+
+    function selectMl(v) {
+        currentMl = v;
+        updateMlUI();
     }
 
     function registerFeed() {
@@ -1095,8 +1101,8 @@
         const record = {
             id: Date.now(),
             timestamp: now.toISOString(),
-            syringes: currentSyringes,
-            ml: currentSyringes * 5,
+            syringes: currentMl / 5,
+            ml: currentMl,
             note: obs
         };
 
@@ -1120,7 +1126,7 @@
 
         document.getElementById('manualDate').value = `${yyyy}-${mm}-${dd}`;
         document.getElementById('manualTime').value = `${hh}:${min}`;
-        document.getElementById('manualSyringe').value = currentSyringes;
+        document.getElementById('manualSyringe').value = fmtMl(currentMl);
         document.getElementById('manualNote').value = '';
         document.getElementById('manualModal').classList.add('open');
     }
@@ -1132,7 +1138,7 @@
     function saveManualFeed() {
         const dateVal = document.getElementById('manualDate').value;
         const timeVal = document.getElementById('manualTime').value;
-        const syrVal = parseFloat(document.getElementById('manualSyringe').value) || 1.5;
+        const mlVal = parseFloat(document.getElementById('manualSyringe').value) || currentMl;
         const noteVal = document.getElementById('manualNote').value.trim();
 
         if (!dateVal || !timeVal) {
@@ -1144,8 +1150,8 @@
         const record = {
             id: customDate.getTime() + Math.floor(Math.random() * 999),
             timestamp: customDate.toISOString(),
-            syringes: syrVal,
-            ml: syrVal * 5,
+            syringes: mlVal / 5,
+            ml: mlVal,
             note: noteVal
         };
 
@@ -1196,7 +1202,7 @@
 
         const timeStr = lastDate.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
         const dayStr = lastDate.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
-        sub.textContent = `Última toma: ${dayStr} a las ${timeStr} (${formatSyringeFraction(tomas[0].syringes)} jer.)`;
+        sub.textContent = `Última toma: ${dayStr} a las ${timeStr} (${fmtMl(getMl(tomas[0]))} ml)`;
 
         if (diffHours >= 3) {
             pill.textContent = '🔔 Revisar buches (ya pasaron +3h)';
@@ -1218,7 +1224,7 @@
         const todayFeeds = tomas.filter(f => new Date(f.timestamp).toDateString() === todayStr);
 
         document.getElementById('todayCountBadge').textContent = `${todayFeeds.length} hoy`;
-        const totalMlToday = todayFeeds.reduce((acc, f) => acc + (Number(f.ml) || 0), 0);
+        const totalMlToday = todayFeeds.reduce((acc, f) => acc + getMl(f), 0);
         document.getElementById('todayMlDisplay').textContent = `${totalMlToday.toFixed(1).replace('.0', '')} ml`;
 
         if (tomas.length >= 2) {
@@ -1277,8 +1283,7 @@
                 intervalHtml = `<span class="interval-badge">🌱 Inicio</span>`;
             }
 
-            const syrLabel = formatSyringeFraction(item.syringes);
-            const mlLabel = (Number(item.ml) || 0).toFixed(1).replace('.0', '');
+            const mlLabel = fmtMl(getMl(item));
 
             return `
                 <div class="history-item">
@@ -1289,7 +1294,7 @@
                             ${intervalHtml}
                         </div>
                         <div class="item-bottom">
-                            💉 ${syrLabel} ${item.syringes === 1 ? 'jeringa' : 'jeringas'} (${mlLabel} ml)
+                            💉 ${mlLabel} ml
                         </div>
                         ${item.note ? `<div class="item-note">${escapeHtml(item.note)}</div>` : ''}
                     </div>
@@ -1314,7 +1319,7 @@
             if (f.type === 'obs') {
                 text += `• ${t} — 📝 ${f.note}\n`;
             } else {
-                text += `• ${t} — ${formatSyringeFraction(f.syringes)} jer. (${f.ml}ml)${f.note ? ` [${f.note}]` : ''}\n`;
+                text += `• ${t} — ${fmtMl(getMl(f))} ml${f.note ? ` [${f.note}]` : ''}\n`;
             }
         });
 
@@ -1384,7 +1389,7 @@
     }
 
     updateHeaderDate();
-    updateSyringeUI();
+    updateMlUI();
     renderAll();
     setInterval(() => { updateLiveTimer(); updateHeaderDate(); }, 30000);
 
