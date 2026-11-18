@@ -705,9 +705,27 @@
         .obs-item{background:rgba(255,248,214,.55)}
         .obs-text{font-size:.85rem;margin-top:2px}
         textarea.form-control{resize:none;font-family:inherit}
+
+        /* ===== Liquid morph ===== */
+        body::before,body::after{display:none}
+        .blobs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+        .blob{position:absolute;display:block;filter:blur(40px);opacity:.75;will-change:transform,border-radius}
+        .b1{width:320px;height:320px;background:#F7BED4;top:-70px;right:-90px;animation:morph1 14s ease-in-out infinite alternate}
+        .b2{width:360px;height:360px;background:#A9D8B3;bottom:-110px;left:-110px;animation:morph2 18s ease-in-out infinite alternate}
+        .b3{width:240px;height:240px;background:#FDE68A;top:42%;left:55%;opacity:.6;animation:morph3 16s ease-in-out infinite alternate}
+        @keyframes morph1{0%{border-radius:60% 40% 55% 45%/50% 60% 40% 50%;transform:translate(0,0) rotate(0)}50%{border-radius:40% 60% 45% 55%/60% 40% 60% 40%;transform:translate(-40px,60px) rotate(60deg)}100%{border-radius:55% 45% 60% 40%/45% 55% 45% 55%;transform:translate(20px,130px) rotate(120deg)}}
+        @keyframes morph2{0%{border-radius:45% 55% 40% 60%/55% 45% 60% 40%;transform:translate(0,0) rotate(0)}50%{border-radius:60% 40% 55% 45%/40% 60% 45% 55%;transform:translate(70px,-50px) rotate(-50deg)}100%{border-radius:50% 50% 45% 55%/60% 40% 55% 45%;transform:translate(30px,-120px) rotate(-100deg)}}
+        @keyframes morph3{0%{border-radius:50% 50% 60% 40%/45% 60% 40% 55%;transform:translate(0,0) scale(1)}50%{border-radius:40% 60% 50% 50%/60% 45% 55% 40%;transform:translate(-80px,40px) scale(1.15)}100%{border-radius:60% 40% 45% 55%/50% 55% 45% 50%;transform:translate(-30px,-70px) scale(.95)}}
+        button,.chip{position:relative;overflow:hidden}
+        .btn-toma-papilla,.btn-obs,.btn-step,.btn-mini-pink,.btn-save-manual,.btn-share,.chip,.btn-del,.btn-edit,.btn-backup,.btn-cancel{transition:transform .4s cubic-bezier(.34,1.56,.64,1),border-radius .4s ease,box-shadow .2s ease}
+        .btn-toma-papilla:active,.btn-obs:active,.btn-step:active,.btn-mini-pink:active,.btn-save-manual:active,.btn-share:active,.chip:active,.btn-del:active,.btn-edit:active,.btn-backup:active,.btn-cancel:active{transform:scale(.93,.88);border-radius:30px 18px 26px 20px/20px 28px 18px 30px}
+        .drop{position:absolute;border-radius:50%;background:rgba(255,255,255,.7);transform:scale(0);animation:drop .65s ease-out forwards;pointer-events:none}
+        @keyframes drop{to{transform:scale(1);opacity:0}}
+        @media (prefers-reduced-motion:reduce){.blob{animation:none}.drop{display:none}}
     </style>
 </head>
 <body>
+<div class="blobs" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
 
 <div class="container">
     <!-- Barra superior -->
@@ -1376,6 +1394,19 @@
     ['manualModal', 'noteModal'].forEach(id => {
         const m = document.getElementById(id);
         m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    });
+
+    // Gota líquida al tocar botones
+    document.addEventListener('pointerdown', e => {
+        const b = e.target.closest('button, .chip');
+        if (!b) return;
+        const r = b.getBoundingClientRect();
+        const size = Math.max(r.width, r.height) * 1.4;
+        const d = document.createElement('span');
+        d.className = 'drop';
+        d.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - r.left - size / 2}px;top:${e.clientY - r.top - size / 2}px`;
+        b.appendChild(d);
+        setTimeout(() => d.remove(), 650);
     });
 </script>
 </body>
