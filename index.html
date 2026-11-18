@@ -679,6 +679,32 @@
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
+
+        /* ===== Glassmorphism ===== */
+        :root{--glass:rgba(255,255,255,.34);--glass-strong:rgba(255,255,255,.55);--glass-border:rgba(255,255,255,.75);--glass-shadow:0 8px 32px rgba(74,53,37,.14)}
+        body{background:linear-gradient(160deg,#FFF6D6 0%,#FDE8F0 45%,#D6EBDA 100%);background-attachment:fixed;overflow-x:hidden}
+        body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(70px);pointer-events:none}
+        body::before{width:300px;height:300px;background:#F7BED4;opacity:.7;top:-60px;right:-80px}
+        body::after{width:340px;height:340px;background:#A9D8B3;opacity:.65;bottom:-100px;left:-100px}
+        .top-bar,.card,.modal-box{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow),inset 0 1px 0 rgba(255,255,255,.8)}
+        .top-bar{border-top:none;position:sticky;top:0;z-index:50}
+        .card-header-row,.backup-row{border-color:rgba(140,98,57,.3)}
+        .timer-box,.chick-pill,.syringe-stepper,.stat-mini,.history-item,.chip,.obs-input,.form-control,.btn-backup,.btn-cancel,.empty-state,.total-badge,.nest-icon-box,.interval-badge,.syringe-ml-badge,.btn-del,.btn-edit{background:var(--glass-strong);border:1px solid var(--glass-border);box-shadow:0 2px 10px rgba(74,53,37,.08)}
+        .btn-share,.btn-mini-pink,.btn-step,.chip.active,.btn-save-manual,.btn-toma-papilla,.btn-obs{background:linear-gradient(135deg,rgba(250,210,225,.9),rgba(247,190,212,.7));border:1px solid rgba(255,255,255,.85);box-shadow:0 6px 18px rgba(240,140,180,.32),inset 0 1px 0 rgba(255,255,255,.75)}
+        .btn-toma-papilla:active,.btn-save-manual:active,.btn-obs:active{box-shadow:0 2px 8px rgba(240,140,180,.3);filter:brightness(.97)}
+        .item-note{background:rgba(255,255,255,.5)}
+        .obs-input:focus,.form-control:focus{box-shadow:0 0 0 3px rgba(247,190,212,.6);outline:none}
+        .modal-backdrop{background:rgba(74,53,37,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+        .toast{background:rgba(74,53,37,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25)}
+        .obs-row{display:flex;gap:8px}
+        .obs-row .obs-input{flex:1;min-width:0}
+        .btn-obs{border-radius:12px;padding:0 14px;font-size:.8rem;font-weight:800;color:var(--brown-dark);cursor:pointer;white-space:nowrap}
+        .obs-hint{font-size:.72rem;font-weight:600;color:var(--brown-mid);margin-top:6px}
+        .item-actions{display:flex;flex-direction:column;gap:6px}
+        .btn-edit{width:34px;height:34px;border-radius:10px;color:var(--brown-dark);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem}
+        .obs-item{background:rgba(255,248,214,.55)}
+        .obs-text{font-size:.85rem;margin-top:2px}
+        textarea.form-control{resize:none;font-family:inherit}
     </style>
 </head>
 <body>
@@ -766,7 +792,11 @@
                 <div class="chip" onclick="selectSyringe(3)">3</div>
             </div>
 
-            <input type="text" id="obsInput" class="obs-input" placeholder="Observación (ej: buches llenitos, pidieron más)...">
+            <div class="obs-row">
+                <input type="text" id="obsInput" class="obs-input" placeholder="Observación (ej: buches llenitos, pidieron más)...">
+                <button class="btn-obs" onclick="saveObservation()" title="Guardar solo la observación, sin registrar toma">📝 Guardar</button>
+            </div>
+            <p class="obs-hint">«Guardar» deja solo la nota. «TOMA PAPILLA» la suma a la toma.</p>
         </section>
 
         <!-- Historial y Frecuencia -->
@@ -829,6 +859,20 @@
         <div class="modal-btns">
             <button class="btn-cancel" onclick="closeManualModal()">Cancelar</button>
             <button class="btn-save-manual" onclick="saveManualFeed()">Guardar Toma</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar observación de una toma -->
+<div class="modal-backdrop" id="noteModal">
+    <div class="modal-box">
+        <div class="modal-title"><span>📝 Observación</span></div>
+        <div class="form-group">
+            <textarea id="editNoteText" class="form-control" rows="3" placeholder="Ej: buches llenitos, pidieron más"></textarea>
+        </div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="closeNoteModal()">Cancelar</button>
+            <button class="btn-save-manual" onclick="saveNoteEdit()">Guardar</button>
         </div>
     </div>
 </div>
@@ -920,6 +964,51 @@
         console.warn('Revisar reglas de Realtime Database:', err);
         showToast('⚠️ Revisá reglas de lectura/escritura en Firebase');
     });
+
+    function getTomas() {
+        return feeds.filter(f => f.type !== 'obs');
+    }
+
+    // Observación suelta: se guarda sin registrar una toma
+    function saveObservation() {
+        const input = document.getElementById('obsInput');
+        const obs = input.value.trim();
+        if (!obs) {
+            showToast('Escribí una observación primero');
+            return;
+        }
+        const record = { id: Date.now(), timestamp: new Date().toISOString(), type: 'obs', syringes: 0, ml: 0, note: obs };
+        feeds.unshift(record);
+        persistFeeds();
+        tomasRef.child(String(record.id)).set(record);
+        input.value = '';
+        renderAll();
+        showToast('📝 Observación guardada');
+    }
+
+    // Editar la observación de una toma o nota existente
+    let editingId = null;
+    function openNoteModal(id) {
+        const f = feeds.find(x => x.id === id);
+        if (!f) return;
+        editingId = id;
+        document.getElementById('editNoteText').value = f.note || '';
+        document.getElementById('noteModal').classList.add('open');
+    }
+    function closeNoteModal() {
+        document.getElementById('noteModal').classList.remove('open');
+        editingId = null;
+    }
+    function saveNoteEdit() {
+        const f = feeds.find(x => x.id === editingId);
+        if (!f) { closeNoteModal(); return; }
+        f.note = document.getElementById('editNoteText').value.trim();
+        persistFeeds();
+        tomasRef.child(String(f.id)).set(f);
+        closeNoteModal();
+        renderAll();
+        showToast('📝 Observación guardada');
+    }
 
     function persistFeeds() {
         feeds.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -1072,7 +1161,8 @@
         const main = document.getElementById('elapsedDisplay');
         const sub = document.getElementById('lastFeedExact');
 
-        if (feeds.length === 0) {
+        const tomas = getTomas();
+        if (tomas.length === 0) {
             pill.textContent = 'Sin tomas registradas';
             pill.className = 'timer-status-pill';
             main.textContent = '— : —';
@@ -1080,7 +1170,7 @@
             return;
         }
 
-        const lastDate = new Date(feeds[0].timestamp);
+        const lastDate = new Date(tomas[0].timestamp);
         const diffMs = Date.now() - lastDate.getTime();
         const diffHours = diffMs / 3600000;
 
@@ -1088,7 +1178,7 @@
 
         const timeStr = lastDate.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
         const dayStr = lastDate.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
-        sub.textContent = `Última toma: ${dayStr} a las ${timeStr} (${formatSyringeFraction(feeds[0].syringes)} jer.)`;
+        sub.textContent = `Última toma: ${dayStr} a las ${timeStr} (${formatSyringeFraction(tomas[0].syringes)} jer.)`;
 
         if (diffHours >= 3) {
             pill.textContent = '🔔 Revisar buches (ya pasaron +3h)';
@@ -1105,20 +1195,19 @@
     function renderAll() {
         updateLiveTimer();
 
+        const tomas = getTomas();
         const todayStr = new Date().toDateString();
-        const todayFeeds = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
+        const todayFeeds = tomas.filter(f => new Date(f.timestamp).toDateString() === todayStr);
 
         document.getElementById('todayCountBadge').textContent = `${todayFeeds.length} hoy`;
-        const totalMlToday = todayFeeds.reduce((acc, f) => acc + f.ml, 0);
+        const totalMlToday = todayFeeds.reduce((acc, f) => acc + (Number(f.ml) || 0), 0);
         document.getElementById('todayMlDisplay').textContent = `${totalMlToday.toFixed(1).replace('.0', '')} ml`;
 
-        if (feeds.length >= 2) {
+        if (tomas.length >= 2) {
             let totalDiff = 0;
             let count = 0;
-            for (let i = 0; i < Math.min(feeds.length - 1, 10); i++) {
-                const d1 = new Date(feeds[i].timestamp).getTime();
-                const d2 = new Date(feeds[i + 1].timestamp).getTime();
-                const diff = d1 - d2;
+            for (let i = 0; i < Math.min(tomas.length - 1, 10); i++) {
+                const diff = new Date(tomas[i].timestamp).getTime() - new Date(tomas[i + 1].timestamp).getTime();
                 if (diff > 0 && diff < 12 * 3600000) {
                     totalDiff += diff;
                     count++;
@@ -1135,15 +1224,34 @@
             return;
         }
 
-        list.innerHTML = feeds.map((item, idx) => {
+        const trash = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+
+        list.innerHTML = feeds.map(item => {
             const d = new Date(item.timestamp);
             const timeStr = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
             const dateStr = d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
+            const delBtn = `<button class="btn-del" onclick="deleteFeed(${item.id})" title="Eliminar">${trash}</button>`;
+            const editBtn = `<button class="btn-edit" onclick="openNoteModal(${item.id})" title="Editar observación">✏️</button>`;
 
+            if (item.type === 'obs') {
+                return `
+                <div class="history-item obs-item">
+                    <div class="item-left">
+                        <div class="item-top">
+                            <span class="item-time">${timeStr}</span>
+                            <span class="item-date">(${dateStr})</span>
+                            <span class="interval-badge">📝 Observación</span>
+                        </div>
+                        <div class="obs-text">${escapeHtml(item.note || '')}</div>
+                    </div>
+                    <div class="item-actions">${editBtn}${delBtn}</div>
+                </div>`;
+            }
+
+            const idx = tomas.indexOf(item);
             let intervalHtml = '';
-            if (idx < feeds.length - 1) {
-                const prevD = new Date(feeds[idx + 1].timestamp);
-                const diff = d.getTime() - prevD.getTime();
+            if (idx < tomas.length - 1) {
+                const diff = d.getTime() - new Date(tomas[idx + 1].timestamp).getTime();
                 if (diff > 0) {
                     intervalHtml = `<span class="interval-badge">⏱️ ${formatDuration(diff)} después</span>`;
                 }
@@ -1152,7 +1260,7 @@
             }
 
             const syrLabel = formatSyringeFraction(item.syringes);
-            const mlLabel = item.ml.toFixed(1).replace('.0', '');
+            const mlLabel = (Number(item.ml) || 0).toFixed(1).replace('.0', '');
 
             return `
                 <div class="history-item">
@@ -1167,14 +1275,8 @@
                         </div>
                         ${item.note ? `<div class="item-note">${escapeHtml(item.note)}</div>` : ''}
                     </div>
-                    <button class="btn-del" onclick="deleteFeed(${item.id})" title="Eliminar">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                    </button>
-                </div>
-            `;
+                    <div class="item-actions">${editBtn}${delBtn}</div>
+                </div>`;
         }).join('');
     }
 
@@ -1184,14 +1286,18 @@
             return;
         }
         const todayStr = new Date().toDateString();
-        const todayFeeds = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
-        const listToShare = todayFeeds.length > 0 ? todayFeeds : feeds.slice(0, 8);
+        const todayAll = feeds.filter(f => new Date(f.timestamp).toDateString() === todayStr);
+        const listToShare = todayAll.length > 0 ? todayAll : feeds.slice(0, 8);
 
         let text = `🪺 *Nido PichónCare (6 pichones)*\n`;
         listToShare.slice().reverse().forEach(f => {
             const d = new Date(f.timestamp);
             const t = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-            text += `• ${t} — ${formatSyringeFraction(f.syringes)} jer. (${f.ml}ml)${f.note ? ` [${f.note}]` : ''}\n`;
+            if (f.type === 'obs') {
+                text += `• ${t} — 📝 ${f.note}\n`;
+            } else {
+                text += `• ${t} — ${formatSyringeFraction(f.syringes)} jer. (${f.ml}ml)${f.note ? ` [${f.note}]` : ''}\n`;
+            }
         });
 
         navigator.clipboard.writeText(text).then(() => {
@@ -1228,8 +1334,9 @@
                     let added = 0;
                     imported.forEach(item => {
                         if (item.timestamp && !feeds.some(f => f.timestamp === item.timestamp)) {
+                            if (!item.id) item.id = new Date(item.timestamp).getTime();
                             feeds.push(item);
-                            tomasRef.child(String(item.id || Date.now())).set(item);
+                            tomasRef.child(String(item.id)).set(item);
                             added++;
                         }
                     });
@@ -1261,7 +1368,15 @@
     updateHeaderDate();
     updateSyringeUI();
     renderAll();
-    setInterval(updateLiveTimer, 30000);
+    setInterval(() => { updateLiveTimer(); updateHeaderDate(); }, 30000);
+
+    document.getElementById('obsInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter') saveObservation();
+    });
+    ['manualModal', 'noteModal'].forEach(id => {
+        const m = document.getElementById(id);
+        m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    });
 </script>
 </body>
 </html>
